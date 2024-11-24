@@ -25,7 +25,7 @@
             </ImageView>
          </children>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="254.0" spacing="20.0" style="-fx-background-color: white;" styleClass="root" stylesheets="@../../../../../view/layout.css">
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="254.0" spacing="20.0" style="-fx-background-color: white;" styleClass="root" stylesheets="@../../../../../view/login/layout.css">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" style="-fx-text-fill: orange;" text="Welcome Back!" textAlignment="CENTER">
                <font>
