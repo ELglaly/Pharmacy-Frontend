@@ -1,4 +1,5 @@
 package org.example.pharmacymanagmentfrontend.Model;
 
-public class PharmacyManager {
+public class PharmacyManager extends Person{
+
 }

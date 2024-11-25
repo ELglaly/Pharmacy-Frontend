@@ -1,4 +1,4 @@
-package org.example.pharmacymanagmentfrontend;
+package org.example.pharmacymanagmentfrontend.Model;
 
 public class Inventory {
 }

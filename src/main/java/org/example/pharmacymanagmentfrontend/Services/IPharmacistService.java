@@ -1,4 +1,4 @@
 package org.example.pharmacymanagmentfrontend.Services;
 
-public class IPharmacist {
+public class IPharmacistService {
 }
