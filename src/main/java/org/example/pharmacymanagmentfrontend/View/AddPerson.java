@@ -1,3 +1,5 @@
+package org.example.pharmacymanagmentfrontend.View;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.JTextComponent;
@@ -6,7 +8,6 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddPerson extends JFrame {
@@ -15,19 +16,40 @@ public class AddPerson extends JFrame {
     private JComboBox<String> userTypeCombo;
     private JButton submitButton;
 
-    public AddPersonForm() {
-        // Set up the frame
-        setTitle("Add Person");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 500);
-        setLayout(new BorderLayout());
-
+    public AddPerson() {
         // Create panel for the form content
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(10, 2, 10, 10)); // 10 rows, 2 columns
+        formPanel.setLayout(new GridLayout(11, 2, 10, 10)); // 10 rows, 2 columns
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         add(formPanel, BorderLayout.CENTER);
 
+        JLabel headerText = new JLabel("User Login Logs");
+        headerText.setFont(new Font("Arial", Font.BOLD, 20));
+        formPanel.add(headerText, BorderLayout.CENTER);
+
+        headerText.setFont(new Font("Arial", Font.BOLD, 20));
+        formPanel.add(new JLabel(""));
+        // Add the Lables anf textfile
+        Addformfields(formPanel);
+        // Submit Button
+        submitButton = new JButton("Add Person");
+        submitButton.setBackground(Color.black);
+        submitButton.setFont(new Font("Arial", Font.BOLD, 14));
+        submitButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        submitButton.setFocusPainted(false);
+        submitButton.setForeground(Color.WHITE);
+        add(submitButton, BorderLayout.SOUTH);
+        // Button Action: On Submit
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleSubmit();
+            }
+        }); // Set frame visibility
+        setVisible(true);
+    }
+
+    private void Addformfields(JPanel formPanel) {
         // Labels and Fields for form entries
         formPanel.add(new JLabel("Name:"));
         nameField = new JTextField();
@@ -36,10 +58,6 @@ public class AddPerson extends JFrame {
         formPanel.add(new JLabel("Username:"));
         usernameField = new JTextField();
         formPanel.add(usernameField);
-
-        formPanel.add(new JLabel("Password:"));
-        passwordField = new JTextField();
-        formPanel.add(passwordField);
 
         formPanel.add(new JLabel("Email:"));
         emailField = new JTextField();
@@ -65,27 +83,6 @@ public class AddPerson extends JFrame {
         formPanel.add(new JLabel("User Type:"));
         userTypeCombo = new JComboBox<>(new String[]{"PharmacyManager", "Pharmacist", "PharmacyTechnician", "Cashier", "Patient"});
         formPanel.add(userTypeCombo);
-
-        // Submit Button
-        submitButton = new JButton("Add Person");
-        submitButton.setBackground(Color.decode("#f9bf29"));
-        submitButton.setFont(new Font("Arial", Font.BOLD, 14));
-        submitButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        submitButton.setFocusPainted(false);
-        submitButton.setForeground(Color.WHITE);
-
-        add(submitButton, BorderLayout.SOUTH);
-
-        // Button Action: On Submit
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleSubmit();
-            }
-        });
-
-        // Set frame visibility
-        setVisible(true);
     }
 
     private void handleSubmit() {
@@ -127,9 +124,5 @@ public class AddPerson extends JFrame {
         }
 
         return true;
-    }
-
-    public static void main(String[] args) {
-        new AddPersonForm();
     }
 }

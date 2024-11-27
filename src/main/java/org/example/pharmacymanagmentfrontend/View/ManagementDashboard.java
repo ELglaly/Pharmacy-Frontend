@@ -1,123 +1,87 @@
 package org.example.pharmacymanagmentfrontend.View;
 
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import javafx.scene.control.Button;
+import org.example.pharmacymanagmentfrontend.Controller.ManagerController;
 
 public class ManagementDashboard extends JFrame {
 
     private UserLogs userLogs;
     private CardLayout cardLayout;
     private JPanel mainPanel;
+    private Scene scene;
+    BorderPane root;
 
     public ManagementDashboard() {
-        // Set up the main frame
-        setTitle("Management Dashboard");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
-        setLayout(new BorderLayout());
 
+        Stage primaryStage = new Stage();
         // Left Navigation Panel
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.setBackground(Color.decode("#eff2f1"));
-        leftPanel.setPreferredSize(new Dimension(200, 600));
+        root = new BorderPane();
 
-        // Add buttons to switch between screens
-        JButton userLogsButton = new JButton("User Logs");
-        userLogsButton.setBackground(Color.orange);
-        userLogsButton.setForeground(Color.white);
-        userLogsButton.setFocusPainted(false);
-   //     userLogsButton.setBorderPainted(false);
+        // Set up the Scene and Stage
+        Scene scene = new Scene(root, 900, 600);
+        primaryStage.setTitle("Management Dashboard");
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-        JButton reportsButton = new JButton("Reports");
-        reportsButton.setBackground(Color.orange);
-        reportsButton.setForeground(Color.white);
-        reportsButton.setFocusPainted(false);
+        // Left Panel in JavaFX (VBox layout)
+        VBox leftPanel = createLeftPanel();
 
-        JButton settingsButton = new JButton("Settings");
-        reportsButton.setBackground(Color.orange);
-        reportsButton.setForeground(Color.white);
-        reportsButton.setFocusPainted(false);
 
-        userLogsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        reportsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        settingsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        leftPanel.add(Box.createVerticalStrut(50)); // Spacer
-        leftPanel.add(userLogsButton);
-        leftPanel.add(Box.createVerticalStrut(20));
-        leftPanel.add(reportsButton);
-        leftPanel.add(Box.createVerticalStrut(20));
-        leftPanel.add(settingsButton);
-
-        add(leftPanel, BorderLayout.WEST);
-
-        // Main Panel with CardLayout
-        cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
-
-        // Add different screens to the main panel
-        mainPanel.add(createUserLogsScreen(), "UserLogs");
-        mainPanel.add(createReportsScreen(), "Reports");
-        mainPanel.add(createSettingsScreen(), "Settings");
-
-        add(mainPanel, BorderLayout.CENTER);
-
-        // Button Actions
-        userLogsButton.addActionListener(e -> cardLayout.show(mainPanel, "UserLogs"));
-        reportsButton.addActionListener(e -> cardLayout.show(mainPanel, "Reports"));
-        settingsButton.addActionListener(e -> cardLayout.show(mainPanel, "Settings"));
-
-        // Set the frame visible
-        setVisible(true);
+        // Add the left panel to the root layout
+        root.setLeft(leftPanel);
+        HBox rightPanel = new HBox(20);
+        rightPanel.getChildren().add(ManagerController.UserLogsScreen());
+        root.setCenter(ManagerController.UserLogsScreen());
     }
 
-    // Screen 1: User Logs
-    private JPanel createUserLogsScreen() {
-        // Create an instance of the UserLogs class
-        UserLogs userLogsFrame = new UserLogs();
+    // Create left navigation panel (buttons for switching between screens)
+    private VBox createLeftPanel() {
+        VBox leftPanel = new VBox(20);  // Reduced spacing to make buttons closer
+        leftPanel.setStyle("-fx-background-color: #f1f1f1; -fx-pref-width: 200; -fx-padding: 20;");  // Lighter background with padding
 
-        // Extract the content pane of the UserLogs frame
-        JPanel userLogsPanel = new JPanel(new BorderLayout());
-        userLogsPanel.add(userLogsFrame.getContentPane(), BorderLayout.CENTER);
+        // Buttons with hover effect and styling
+        Button userLogsButton = createStyledButton("User Logs");
+        Button addPersonButton = createStyledButton("Add Person");
+        Button settingsButton = createStyledButton("Settings");
 
-        return userLogsPanel;
+        userLogsButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+
+        });
+
+
+
+
+        // Add buttons to the panel
+        leftPanel.getChildren().addAll(userLogsButton, addPersonButton, settingsButton);
+
+        // Make sure buttons are centered
+        leftPanel.setAlignment(Pos.CENTER);
+
+        return leftPanel;
     }
 
+    // Helper method to create styled buttons
+    private Button createStyledButton(String text) {
+        Button button = new Button(text);
+        button.setStyle("-fx-background-color: #f9bf29; -fx-text-fill: white; -fx-font-size: 14px; " +
+                "-fx-padding: 10px 20px; -fx-background-radius: 25px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);");
 
-    // Screen 2: Reports
-    private JPanel createReportsScreen() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel header = new JLabel("Reports", SwingConstants.CENTER);
-        header.setFont(new Font("Arial", Font.BOLD, 20));
-
-        JTextArea textArea = new JTextArea("Reports Content Here...");
-        panel.add(header, BorderLayout.NORTH);
-        panel.add(new JScrollPane(textArea), BorderLayout.CENTER);
-
-        return panel;
+        // Add hover effect for interactivity
+        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #ff9933; -fx-text-fill: white; -fx-font-size: 14px; " +
+                "-fx-padding: 10px 20px; -fx-background-radius: 25px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);"));
+        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #f9bf29; -fx-text-fill: white; -fx-font-size: 14px; " +
+                "-fx-padding: 10px 20px; -fx-background-radius: 25px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);"));
+        return button;
     }
-
-    // Screen 3: Settings
-    private JPanel createSettingsScreen() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel header = new JLabel("Settings", SwingConstants.CENTER);
-        header.setFont(new Font("Arial", Font.BOLD, 20));
-
-        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 10));
-        formPanel.add(new JLabel("Setting 1:"));
-        formPanel.add(new JTextField());
-        formPanel.add(new JLabel("Setting 2:"));
-        formPanel.add(new JTextField());
-
-        panel.add(header, BorderLayout.NORTH);
-        panel.add(formPanel, BorderLayout.CENTER);
-
-        return panel;
-    }
-
 
 
 

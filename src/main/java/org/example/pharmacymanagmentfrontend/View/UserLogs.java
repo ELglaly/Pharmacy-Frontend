@@ -1,148 +1,162 @@
 package org.example.pharmacymanagmentfrontend.View;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-//import org.example.pharmacymanagmentfrontend.Model.UserLogs;
+public class UserLogs extends Stage {
+    private static Button searchButton;
+    private static Button resetButton;
+    private static TableView<org.example.pharmacymanagmentfrontend.Model.UserLogs> logsTable;
+    private static Label totalLogsLabel;
+    private static TextField searchField;
+    private static String totalLogsNumber;
 
-public class UserLogs extends javax.swing.JFrame {
-    private JTextField searchField;
-    private JButton searchButton, resetButton;
-    private JTable logsTable;
-    private JLabel totalLogsLabel;
 
-    public UserLogs() {
-        // Top Section
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(Color.WHITE);
-        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel headerText = new JLabel("User Login Logs");
-        headerText.setFont(new Font("Arial", Font.BOLD, 20));
-        topPanel.add(headerText, BorderLayout.NORTH);
+    // Top Sectio
+    public static VBox AddUserLogsView() {
+        VBox root = new VBox(20); // VBox with 20px spacing between elements
+        root.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 20px;");
 
-        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        searchField = new JTextField(20);
-        searchField.setToolTipText("Search by Username");
-        searchButton = new JButton("Search");
-        resetButton = new JButton("Reset");
+        // Header Section
+        Label headerText = new Label("User Logs");
+        headerText.setFont(new Font("Arial", 24));
+        headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+        root.getChildren().add(headerText);
 
-        searchPanel.add(searchField);
-        searchPanel.add(searchButton);
-        searchPanel.add(resetButton);
+        // Search Section
+        VBox searchPanel = new VBox(10);
+        searchPanel.setAlignment(Pos.CENTER);
 
-        topPanel.add(searchPanel, BorderLayout.CENTER);
-        add(topPanel, BorderLayout.NORTH);
 
-        // Center Section (Table)
-        String[] columnNames = {"Login Time", "Successful Login", "Username", "User Type"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-        logsTable = new JTable(tableModel);
+        searchField = new TextField();
+        searchField.setPromptText("Search by Username");  // Set a prompt text
 
-        // Add logs to check the code
-        UserGenerator.Addlogs();  // This should add logs to the UserTracker
-        for (org.example.pharmacymanagmentfrontend.Model.UserLogs userlog : UserGenerator.getLoginTracker()) {
-            tableModel.addRow(new Object[]{userlog.getLoginTime(), userlog.getSuccessfulLogin(), userlog.getUsername(), userlog.getType()});
-        }
+        Button searchButton = new Button("Search");
+        Button resetButton = new Button("Reset");
 
-        // Enhance table appearance
-        logsTable.setRowHeight(30); // Set row height for better readability
-        logsTable.setFont(new Font("Arial", Font.PLAIN, 14)); // Set font for the table
-        logsTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14)); // Bold column headers
-        logsTable.getTableHeader().setBackground(new Color(70, 130, 180)); // Header background color
-        logsTable.getTableHeader().setForeground(Color.WHITE); // Header text color
-        logsTable.setGridColor(new Color(200, 200, 200)); // Set grid color to make it lighter
-        logsTable.setShowGrid(true); // Show gridlines
-        logsTable.setSelectionBackground(new Color(135, 206, 250)); // Highlight selected row
-        logsTable.setSelectionForeground(Color.BLACK); // Selected row text color
+        // Create an HBox to hold the TextField and Buttons horizontally
+        HBox headpanel = new HBox(10);  // 10px spacing between elements
+        headpanel.setAlignment(Pos.CENTER_LEFT);  // Align elements to the left within the HBox
+        headpanel.getChildren().addAll(searchField, searchButton, resetButton);
 
-        // Add alternating row colors
-        logsTable.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (row % 2 == 0) {
-                    c.setBackground(new Color(240, 248, 255)); // Light blue for even rows
-                } else {
-                    c.setBackground(Color.WHITE); // White for odd rows
-                }
-                if (isSelected) {
-                    c.setBackground(new Color(0, 123, 255)); // Highlight selected row
-                }
-                return c;
-            }
-        });
+        searchButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 14px;");
+        resetButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;");
 
-        // Scroll pane for table
-        JScrollPane tableScrollPane = new JScrollPane(logsTable);
-        add(tableScrollPane, BorderLayout.CENTER);
+        searchButton.setMaxWidth(150);
+        resetButton.setMaxWidth(150);
 
-        // Bottom Section (Total Logs Display)
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        bottomPanel.setBackground(new Color(255, 165, 0)); // Orange background
+        searchButton.setOnMouseEntered(e -> searchButton.setStyle("-fx-background-color: #f1c40f; -fx-text-fill: white; -fx-font-size: 14px;"));
+        searchButton.setOnMouseExited(e -> searchButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 14px;"));
 
-        JLabel totalLogsTextLabel = new JLabel("Total Logs:");
-        totalLogsTextLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        totalLogsLabel = new JLabel(String.valueOf(UserGenerator.getLoginTracker().size()));
-        totalLogsLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resetButton.setOnMouseEntered(e -> resetButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;"));
+        resetButton.setOnMouseExited(e -> resetButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;"));
 
-        bottomPanel.add(totalLogsTextLabel);
-        bottomPanel.add(totalLogsLabel);
+        searchPanel.getChildren().addAll(headpanel);
+        root.getChildren().add(searchPanel);
+        root.getChildren().add(addTable());
 
-        add(bottomPanel, BorderLayout.SOUTH);
+        // Bottom Section: Display Total Logs
+        VBox bottomPanel = new VBox(10);
+        bottomPanel.setAlignment(Pos.CENTER);
+
+        Label totalLogsTextLabel = new Label("Total Logs:");
+        totalLogsTextLabel.setFont(new Font("Arial", 14));
+        totalLogsTextLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+
+        totalLogsNumber=String.valueOf(UserGenerator.getLoginTracker().size());
+        totalLogsLabel = new Label(totalLogsNumber);
+        totalLogsLabel.setFont(new Font("Arial", 14));
+        totalLogsLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2980b9;");
+
+        bottomPanel.getChildren().addAll(totalLogsTextLabel, totalLogsLabel);
+        root.getChildren().add(bottomPanel);
+
+        searchButton.setOnAction(e -> performSearch());
+        resetButton.setOnAction(e -> resetSearch());
+        return root;
 
         // Button Actions
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performSearch();
-            }
-        });
 
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resetSearch(tableModel);
-            }
-        });
 
-        // Set the frame visible
-        setVisible(true);
+
+        // Set the stage visible
+    }
+
+    private static TableView<org.example.pharmacymanagmentfrontend.Model.UserLogs> addTable()
+    {
+        logsTable = new TableView<>();
+
+        // Define columns for the table
+        TableColumn<org.example.pharmacymanagmentfrontend.Model.UserLogs, String> loginTimeColumn = new TableColumn<>("Login Time");
+        loginTimeColumn.setCellValueFactory(new PropertyValueFactory<>("loginTime"));  // Bind to loginTime property
+
+        TableColumn<org.example.pharmacymanagmentfrontend.Model.UserLogs, Boolean> successfulLoginColumn = new TableColumn<>("=Status");
+        successfulLoginColumn.setCellValueFactory(new PropertyValueFactory<>("successfulLogin"));  // Bind to successfulLogin property
+
+        TableColumn<org.example.pharmacymanagmentfrontend.Model.UserLogs, String> usernameColumn = new TableColumn<>("Username");
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));  // Bind to username property
+
+        TableColumn<org.example.pharmacymanagmentfrontend.Model.UserLogs, String> userTypeColumn = new TableColumn<>("User Type");
+        userTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));  // Bind to type property
+
+        // Add columns to the TableView
+        logsTable.getColumns().addAll(loginTimeColumn, successfulLoginColumn, usernameColumn, userTypeColumn);
+
+
+        UserGenerator.Addlogs();
+        // Add logic to populate the table with data from UserGenerator
+        for (org.example.pharmacymanagmentfrontend.Model.UserLogs userLog : UserGenerator.getLoginTracker()) {
+            logsTable.getItems().add(userLog);  // Add each log entry to the table
+        }
+
+        // Apply modern styling to the table
+        logsTable.setStyle("-fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-padding: 10px; -fx-background-color: white; -fx-border-color: #e0e0e0;");
+
+        // Create a ScrollPane for the TableView to make it scrollable
+        ScrollPane tableScrollPane = new ScrollPane();
+        tableScrollPane.setContent(logsTable); // Set the TableView as the content of the ScrollPane
+        tableScrollPane.setFitToHeight(true);  // Make the ScrollPane fit the height of the content
+        tableScrollPane.setFitToWidth(true);   // Make the ScrollPane fit the width of the content
+      //  totalLogsLabel.setText(String.valueOf(logsTable.getItems().size())); // set the number of logs
+
+        return logsTable;
+
     }
 
 
-    private void performSearch() {
+
+
+    private static void performSearch() {
         String searchQuery = searchField.getText().trim().toLowerCase(); // Make search case insensitive
         if (!searchQuery.isEmpty()) {
-            DefaultTableModel tableModel = (DefaultTableModel) logsTable.getModel();
-            tableModel.setRowCount(0); // Clear existing rows before searching
+            logsTable.getItems().clear();
 
             // Loop through all the logs and add matching ones to the table
             for (org.example.pharmacymanagmentfrontend.Model.UserLogs userlog : UserGenerator.getLoginTracker()) {
-                if (userlog.getUsername().toLowerCase().contains(searchQuery)) {
-                    tableModel.addRow(new Object[]{userlog.getLoginTime(), userlog.getSuccessfulLogin(), userlog.getUsername(), userlog.getType()});
+                if (!userlog.getUsername().isEmpty() && userlog.getUsername().toLowerCase().contains(searchQuery.toLowerCase())) {
+                    logsTable.getItems().add(userlog);
                 }
             }
-
-            // If no results, display a message or handle it accordingly
-            if (tableModel.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "No results found for: " + searchQuery, "Search", JOptionPane.INFORMATION_MESSAGE);
-            }
+            totalLogsNumber=String.valueOf(logsTable.getItems().size());
+           totalLogsLabel.setText(totalLogsNumber); // set the number of logs
         }
     }
 
-    private void resetSearch(DefaultTableModel tableModel) {
+    private static void resetSearch() {
         searchField.setText(""); // Clear search field
-        totalLogsLabel.setText(String.valueOf(UserGenerator.getLoginTracker().size())); // Reset the total logs count
-        // Reload all data into the table
-        tableModel.setRowCount(0); // Clear the table
-        for (org.example.pharmacymanagmentfrontend.Model.UserLogs userlog : UserGenerator.getLoginTracker()) {
-            tableModel.addRow(new Object[]{userlog.getLoginTime(), userlog.getSuccessfulLogin(), userlog.getUsername(), userlog.getType()});
+        logsTable.getItems().clear();
+        for (org.example.pharmacymanagmentfrontend.Model.UserLogs userLog : UserGenerator.getLoginTracker()) {
+            logsTable.getItems().add(userLog);  // Add each log entry to the table
         }
+        totalLogsNumber=String.valueOf(logsTable.getItems().size());
+        totalLogsLabel.setText(totalLogsNumber);
     }
 
 }
