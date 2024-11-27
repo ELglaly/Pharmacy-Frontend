@@ -18,6 +18,9 @@ public class ManagementDashboard extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainPanel;
     private Scene scene;
+    private Button addPersonButton;
+    private Button editPersonButton;
+    private Button userLogsButton;
     BorderPane root;
 
     public ManagementDashboard() {
@@ -25,21 +28,16 @@ public class ManagementDashboard extends JFrame {
         Stage primaryStage = new Stage();
         // Left Navigation Panel
         root = new BorderPane();
-
         // Set up the Scene and Stage
         Scene scene = new Scene(root, 900, 600);
         primaryStage.setTitle("Management Dashboard");
         primaryStage.setScene(scene);
         primaryStage.show();
-
         // Left Panel in JavaFX (VBox layout)
         VBox leftPanel = createLeftPanel();
-
-
         // Add the left panel to the root layout
         root.setLeft(leftPanel);
-        HBox rightPanel = new HBox(20);
-        rightPanel.getChildren().add(ManagerController.UserLogsScreen());
+        //set the result for the button
         root.setCenter(ManagerController.UserLogsScreen());
     }
 
@@ -49,19 +47,24 @@ public class ManagementDashboard extends JFrame {
         leftPanel.setStyle("-fx-background-color: #f1f1f1; -fx-pref-width: 200; -fx-padding: 20;");  // Lighter background with padding
 
         // Buttons with hover effect and styling
-        Button userLogsButton = createStyledButton("User Logs");
-        Button addPersonButton = createStyledButton("Add Person");
-        Button settingsButton = createStyledButton("Settings");
+        userLogsButton = createStyledButton("User Logs","#f9bf29","#ff9933");
+        addPersonButton = createStyledButton("Add Person","#f9bf29","#ff9933");
+        editPersonButton = createStyledButton("Edit Person","#f9bf29","#ff9933");
 
         userLogsButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-
+            root.setCenter(ManagerController.UserLogsScreen());
         });
 
+        addPersonButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            root.setCenter(ManagerController.Addperson());
+        });
 
-
+        editPersonButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            root.setCenter(ManagerController.UserLogsScreen());
+        });
 
         // Add buttons to the panel
-        leftPanel.getChildren().addAll(userLogsButton, addPersonButton, settingsButton);
+        leftPanel.getChildren().addAll(userLogsButton, addPersonButton, editPersonButton);
 
         // Make sure buttons are centered
         leftPanel.setAlignment(Pos.CENTER);
@@ -70,16 +73,28 @@ public class ManagementDashboard extends JFrame {
     }
 
     // Helper method to create styled buttons
-    private Button createStyledButton(String text) {
+    public static Button createStyledButton(String text,String backgroundColor, String backgroundColorEdit) {
         Button button = new Button(text);
-        button.setStyle("-fx-background-color: #f9bf29; -fx-text-fill: white; -fx-font-size: 14px; " +
-                "-fx-padding: 10px 20px; -fx-background-radius: 25px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);");
+        button.setStyle(String.format(
+                "-fx-background-color: %s; -fx-text-fill: white; -fx-font-size: 14px; " +
+                        "-fx-padding: 10px 20px; -fx-background-radius: 25px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);",
+                backgroundColor
+        ));
 
         // Add hover effect for interactivity
-        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #ff9933; -fx-text-fill: white; -fx-font-size: 14px; " +
-                "-fx-padding: 10px 20px; -fx-background-radius: 25px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);"));
-        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #f9bf29; -fx-text-fill: white; -fx-font-size: 14px; " +
-                "-fx-padding: 10px 20px; -fx-background-radius: 25px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);"));
+        button.setOnMouseEntered(e -> button.setStyle(String.format(
+                "-fx-background-color: %s; -fx-text-fill: white; -fx-font-size: 14px; " +
+                        "-fx-padding: 10px 20px; -fx-background-radius: 25px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);",
+                backgroundColorEdit
+        )));
+        button.setOnMouseExited(e -> button.setStyle(String.format(
+                "-fx-background-color: %s; -fx-text-fill: white; -fx-font-size: 14px; " +
+                        "-fx-padding: 10px 20px; -fx-background-radius: 25px; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);",
+                backgroundColor
+        )));
         return button;
     }
 

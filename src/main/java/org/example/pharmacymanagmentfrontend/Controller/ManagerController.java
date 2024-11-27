@@ -82,12 +82,12 @@ public class ManagerController {
     }
 
 
-    public static JPanel Addperson() {
-        org.example.pharmacymanagmentfrontend.View.AddPerson AddPersonFrame = new org.example.pharmacymanagmentfrontend.View.AddPerson();
-        // Extract the content pane of the UserLogs frame
-        JPanel AddPersonPanel = new JPanel(new BorderLayout());
-        AddPersonPanel.add(AddPersonFrame.getContentPane(), BorderLayout.CENTER);
-        return AddPersonPanel;
+    public static VBox Addperson() {
+
+        VBox AddpersonPanel = new VBox(10);
+        AddpersonPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.AddPerson.createAddPersonView());
+
+        return AddpersonPanel;
     }
 
 
