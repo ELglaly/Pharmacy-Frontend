@@ -17,7 +17,8 @@ public class UserLogs {
     }
 
     public String getUsername() {
-        return username;
+            return username;
+
     }
 
     public void setUsername(String username) {
@@ -34,6 +35,13 @@ public class UserLogs {
 
     public Boolean getSuccessfulLogin() {
         return successfulLogin;
+    }
+
+    public String getType() {
+        if(person==null)
+            return "Unknown";
+        else
+            return person.getType().toString();
     }
 
     public void setSuccessfulLogin(Boolean successfulLogin) {

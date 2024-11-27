@@ -16,37 +16,7 @@ public class UserGenerator {
     private String[] cashierNames = {"Benjamin Scott", "Charlotte Young", "Elijah Adams", "Harper King", "Logan Wright"};
     private String[] patientNames = {"Henry Hill", "Emily Carter", "Jackson Baker", "Abigail Green", "Sebastian Nelson"};
 
-    public void createUsers() {
-
-        Random random = new Random();
-        for (int i = 0; i < 5; i++) {
-            // Randomly pick a user type
-            int userType = random.nextInt(5);
-            Person user = null;
-
-            switch (userType) {
-                case 0 ->
-                        user = pharmacyManagers.isEmpty() ? null : pharmacyManagers.get(random.nextInt(pharmacyManagers.size()));
-                case 1 -> user = pharmacists.isEmpty() ? null : pharmacists.get(random.nextInt(pharmacists.size()));
-                case 2 ->
-                        user = pharmacyTechnicians.isEmpty() ? null : pharmacyTechnicians.get(random.nextInt(pharmacyTechnicians.size()));
-                case 3 -> user = cashiers.isEmpty() ? null : cashiers.get(random.nextInt(cashiers.size()));
-                case 4 -> user = patients.isEmpty() ? null : patients.get(random.nextInt(patients.size()));
-            }
-
-            if (user != null) {
-                // Simulate a 70% success rate
-                boolean isSuccessfulLogin = random.nextDouble() < 0.7;
-
-                if (isSuccessfulLogin) {
-                    // Use the correct credentials for a successful login
-                    UserGenerator.login(user.getEmail(), user.getPassword());
-                } else {
-                    // Use incorrect credentials for a failed login
-                    UserGenerator.login("wrong_email@gmail.com", "wrong_password");
-                }
-            }
-        }
+    public UserGenerator() {
 
         // Create Pharmacy Managers
         for (int i = 0; i < managerNames.length; i++) {
@@ -58,7 +28,8 @@ public class UserGenerator {
             manager.setPhone("555-123-" + (1000 + i));
             manager.setLicenseNumber("PM" + (10000 + i));
             manager.setAddress("Manager Address " + (i + 1));
-            manager.setBirthDate(new Date(1980 + i, 5, 15)); // Example birth date
+            manager.setBirthDate(new Date(1980 + i, 5, 15));
+            manager.setType();// Example birth date
             pharmacyManagers.add(manager);
         }
 
@@ -72,7 +43,8 @@ public class UserGenerator {
             pharmacist.setPhone("555-456-" + (1000 + i));
             pharmacist.setLicenseNumber("PH" + (20000 + i));
             pharmacist.setAddress("Pharmacist Address " + (i + 1));
-            pharmacist.setBirthDate(new Date(1990 + i, 7, 20)); // Example birth date
+            pharmacist.setBirthDate(new Date(1990 + i, 7, 20));
+            pharmacist.setType();// Example birth date
             pharmacists.add(pharmacist);
         }
 
@@ -86,7 +58,8 @@ public class UserGenerator {
             technician.setPhone("555-789-" + (1000 + i));
             technician.setLicenseNumber("PT" + (30000 + i));
             technician.setAddress("Technician Address " + (i + 1));
-            technician.setBirthDate(new Date(1995 + i, 3, 10)); // Example birth date
+            technician.setBirthDate(new Date(1995 + i, 3, 10));
+            technician.setType();// Example birth date
             pharmacyTechnicians.add(technician);
         }
 
@@ -100,6 +73,7 @@ public class UserGenerator {
             cashier.setPhone("555-321-" + (1000 + i));
             cashier.setAddress("Cashier Address " + (i + 1));
             cashier.setBirthDate(new Date(2000 + i, 11, 5)); // Example birth date
+            cashier.setType();
             cashiers.add(cashier);
         }
 
@@ -112,7 +86,8 @@ public class UserGenerator {
             patient.setEmail(patient.getUsername() + "@pharmacy.com");
             patient.setPhone("555-654-" + (1000 + i));
             patient.setAddress("Patient Address " + (i + 1));
-            patient.setBirthDate(new Date(2005 + i, 6, 25)); // Example birth date
+            patient.setBirthDate(new Date(2005 + i, 6, 25));
+            patient.setType();// Example birth date
             patients.add(patient);
         }
     }
@@ -155,7 +130,7 @@ public class UserGenerator {
     public static Person login(String username, String password) {
         // Check Pharmacy Managers
         for (PharmacyManager manager : pharmacyManagers) {
-            if (manager.getEmail().equalsIgnoreCase(username) && manager.getPassword().equals(password)) {
+            if (manager.getUsername().equalsIgnoreCase(username) && manager.getPassword().equals(password)) {
                 System.out.println("Login successful as Pharmacy Manager.");
                 incrementAttemptedLogins(new Date(),manager);
                 return manager;
@@ -164,7 +139,7 @@ public class UserGenerator {
 
         // Check Pharmacists
         for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getEmail().equalsIgnoreCase(username) && pharmacist.getPassword().equals(password)) {
+            if (pharmacist.getUsername().equalsIgnoreCase(username) && pharmacist.getPassword().equals(password)) {
                 System.out.println("Login successful as Pharmacist.");
                 incrementAttemptedLogins(new Date(),pharmacist);
                 return pharmacist;
@@ -173,7 +148,7 @@ public class UserGenerator {
 
         // Check Pharmacy Technicians
         for (PharmacyTechnician technician : pharmacyTechnicians) {
-            if (technician.getEmail().equalsIgnoreCase(username) && technician.getPassword().equals(password)) {
+            if (technician.getUsername().equalsIgnoreCase(username) && technician.getPassword().equals(password)) {
                 System.out.println("Login successful as Pharmacy Technician.");
                 incrementAttemptedLogins(new Date(),technician);
                 return technician;
@@ -182,7 +157,7 @@ public class UserGenerator {
 
         // Check Cashiers
         for (Cashier cashier : cashiers) {
-            if (cashier.getEmail().equalsIgnoreCase(username) && cashier.getPassword().equals(password)) {
+            if (cashier.getUsername().equalsIgnoreCase(username) && cashier.getPassword().equals(password)) {
                 System.out.println("Login successful as Cashier.");
                 incrementAttemptedLogins(new Date(),cashier);
                 return cashier;
@@ -195,4 +170,33 @@ public class UserGenerator {
         return null;
     }
 
+    public static void Addlogs() {
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            // Randomly pick a user type
+            int userType = random.nextInt(4);
+            Person user = null;
+            switch (userType) {
+                case 0 ->
+                        user = pharmacyManagers.isEmpty() ? null : pharmacyManagers.get(random.nextInt(pharmacyManagers.size()));
+                case 1 -> user = pharmacists.isEmpty() ? null : pharmacists.get(random.nextInt(pharmacists.size()));
+                case 2 ->
+                        user = pharmacyTechnicians.isEmpty() ? null : pharmacyTechnicians.get(random.nextInt(pharmacyTechnicians.size()));
+                case 3 -> user = cashiers.isEmpty() ? null : cashiers.get(random.nextInt(cashiers.size()));
+            }
+
+            if (user != null) {
+                // Simulate a 70% success rate
+                boolean isSuccessfulLogin = random.nextDouble() < 0.7;
+
+                if (isSuccessfulLogin) {
+                    // Use the correct credentials for a successful login
+                    UserGenerator.login(user.getUsername(), user.getPassword());
+                } else {
+                    // Use incorrect credentials for a failed login
+                    UserGenerator.login("wrong_email@gmail.com", "wrong_password");
+                }
+            }
+        }
+    }
 }

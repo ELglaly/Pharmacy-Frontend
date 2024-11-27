@@ -2,6 +2,7 @@ module org.example.pharmacymanagmentfrontend {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.desktop;
 
 
     opens org.example.pharmacymanagmentfrontend to javafx.fxml;

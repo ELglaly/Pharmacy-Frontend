@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.pharmacymanagmentfrontend.View.UserLogs"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="org.example.pharmacymanagmentfrontend.Controller.ManagerController">
+    <!-- Top Section -->
+    <top>
+        <VBox spacing="10" style="-fx-padding: 20; -fx-background-color: white;">
+            <Text styleClass="header-text" text="User Login Logs" />
+            <HBox spacing="10">
+                <TextField fx:id="searchField" promptText="Search by Username" styleClass="input-field" />
+                <Button fx:id="searchButton"  styleClass="primary-button" text="Search" />
+                <Button fx:id="resetButton"  styleClass="secondary-button" text="Reset" />
+            </HBox>
+        </VBox>
+    </top>
 
-</AnchorPane>
+    <!-- Center Section -->
+    <center>
+        <TableView fx:id="logsTable" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="loginTimeColumn" prefWidth="200" text="Login Time" />
+                <TableColumn fx:id="successfulLoginColumn" prefWidth="150" text="Successful Login" />
+                <TableColumn fx:id="usernameColumn" prefWidth="150" text="Username" />
+                <TableColumn fx:id="userTypeColumn" prefWidth="150" text="User Type" />
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- Bottom Section -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10; -fx-background-color: orange;">
+            <Label styleClass="label-bold" text="Total Logs:" />
+            <Label fx:id="totalLogsLabel" styleClass="label-number" text="0" />
+        </HBox>
+    </bottom>
+</BorderPane>

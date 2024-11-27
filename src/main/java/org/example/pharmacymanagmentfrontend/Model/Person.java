@@ -36,10 +36,6 @@ public abstract class Person {
         return Type;
     }
 
-    public void setType(userTypes type) {
-        Type = type;
-    }
-
     public Date getBirthDate() {
         return birthDate;
     }
@@ -87,6 +83,9 @@ public abstract class Person {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public abstract void setType();
+
 
 
 

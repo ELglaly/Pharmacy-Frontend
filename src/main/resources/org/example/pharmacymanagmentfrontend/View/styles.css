@@ -1,0 +1,72 @@
+/* General Layout */
+.root {
+    -fx-font-family: "Arial";
+    -fx-background-color: #ecf0f1; /* Light gray background */
+}
+
+/* Header Text */
+.header-text {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff; /* White text on green background */
+    -fx-effect: dropshadow(gaussian, whitesmoke, 4, 0.5, 0, 0);
+}
+
+/* Input Field */
+.input-field {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-border-color: #16a085; /* Green border */
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-prompt-text-fill: #7f8c8d; /* Light gray text for placeholder */
+}
+
+/* Buttons */
+.primary-button {
+    -fx-background-color: orange; /* Blue button */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-padding: 5 15;
+    -fx-effect: dropshadow(gaussian, #orange, 4, 0.5, 0, 0);
+}
+
+.secondary-button {
+    -fx-background-color: #7f8c8d; /* Gray button */
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+    -fx-padding: 5 15;
+}
+
+/* Table View */
+.table-view {
+    -fx-border-color: #bdc3c7; /* Gray border */
+    -fx-table-cell-border-color: #dfe6e9;
+    -fx-background-color: #ffffff;
+}
+
+.table-view .column-header {
+    -fx-background-color: linear-gradient(#16a085, #1abc9c); /* Gradient green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .cell {
+    -fx-text-fill: #2c3e50; /* Dark blue text */
+    -fx-font-size: 14px;
+}
+
+/* Labels */
+.label-bold {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+}
+
+.label-number {
+    -fx-font-size: 16px;
+    -fx-text-fill: #ecf0f1; /* Light gray */
+    -fx-background-color: #2980b9; /* Blue background */
+    -fx-padding: 5 10;
+    -fx-border-radius: 5;
+}
