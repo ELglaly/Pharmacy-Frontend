@@ -1,5 +1,8 @@
 package org.example.pharmacymanagmentfrontend.Model;
+import javafx.scene.control.TextField;
+
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.*;
 
 public class UserGenerator {
@@ -9,6 +12,7 @@ public class UserGenerator {
     private static List<Cashier> cashiers = new ArrayList<>();
     private static List<Patient> patients = new ArrayList<>();
     private static List<UserLogs> loginTracker = new ArrayList<>();
+    public static List<Inventory> inventoryStock = new ArrayList<>();
 
     private String[] managerNames = {"Sherif Shawashen"};
     private String[] pharmacistNames = {"Emma Harris", "Liam Moore", "Ava Taylor", "Noah Anderson", "Isabella Clark"};
@@ -92,6 +96,16 @@ public class UserGenerator {
         }
     }
 
+    public static void updateUser(Person person, String name, String email, String phone, String licenseNumber, String address, LocalDate birthDate, String userType, Date birthDateAsDate) {
+        person.setName(name);
+        person.setEmail(email);
+        person.setPhone(phone);
+        person.setLicenseNumber(licenseNumber);
+        person.setAddress(address);
+        person.setType(Person.userTypes.valueOf(userType));
+        person.setBirthDate(birthDateAsDate);
+    }
+
     // Getters for the lists
     public List<PharmacyManager> getPharmacyManagers() {
         return pharmacyManagers;
@@ -126,14 +140,20 @@ public class UserGenerator {
         return loginTracker;
     }
 
+    public static List<Inventory> getInventoryStock() {
+        return inventoryStock;
+    }
+
 
     public static Person login(String username, String password) {
         // Check Pharmacy Managers
-        for (PharmacyManager manager : pharmacyManagers) {
-            if (manager.getUsername().equalsIgnoreCase(username) && manager.getPassword().equals(password)) {
+        Person person =checkUsername(username);
+        if(person!=null)
+        {
+               if(person.getPassword().equals(password)) {
                 System.out.println("Login successful as Pharmacy Manager.");
-                incrementAttemptedLogins(new Date(),manager);
-                return manager;
+                incrementAttemptedLogins(new Date(),person);
+                return person;
             }
         }
 
@@ -170,7 +190,22 @@ public class UserGenerator {
         return null;
     }
 
-    public static void Addlogs() {
+    public static Person checkUsername(String username) {
+        for (PharmacyManager manager : pharmacyManagers) {
+            if (manager.getUsername().equalsIgnoreCase(username)) {
+                return manager;
+            }
+        }
+        for (Pharmacist pharmacist : pharmacists) {
+            if (pharmacist.getUsername().equalsIgnoreCase(username)) {
+                return pharmacist;
+            }
+        }
+        return null;
+    }
+
+
+                public static void Addlogs() {
         Random random = new Random();
         for (int i = 0; i < 100; i++) {
             // Randomly pick a user type
@@ -199,4 +234,23 @@ public class UserGenerator {
             }
         }
     }
+
+
+    //generate Inventory Stock
+    public static void generateRandomInventory() {
+        Random random = new Random();
+        // Define some possible medication names
+        String[] medications = {
+                "Paracetamol", "Ibuprofen", "Amoxicillin", "Cough Syrup", "Vitamin C",
+                "Aspirin", "Antibiotics", "Metformin", "Insulin", "Morphine"
+        };
+
+        // Generate random inventory data
+        for (int i = 0; i < 50; i++) {
+            String medicationName = medications[random.nextInt(medications.length)];
+            int quantity = random.nextInt(101); // Random quantity between 0 and 100
+            inventoryStock.add(new Inventory(medicationName, quantity));
+        }
+    }
+
 }

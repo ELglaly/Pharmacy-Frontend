@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -35,6 +36,11 @@ public class ManagerController {
   //  private Scene scene;
     private Parent root;
 
+    public static VBox updatePersonView() {
+        VBox AddpersonPanel = new VBox(10);
+        AddpersonPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.UpdatePerson.createUpdatePersonView());
+        return AddpersonPanel;
+    }
 
 
     public void loginAction(ActionEvent event) throws IOException {
@@ -45,9 +51,10 @@ public class ManagerController {
 //           switch (user.getType())
 //           {
 //               case PharmacyManager: {
-                   Stage stage =  (Stage)loginbutton.getScene().getWindow();
-                   stage.close();
-                    ManagementDashboard managementDashboard = new ManagementDashboard();
+                    Stage stage =  (Stage)loginbutton.getScene().getWindow();
+                    stage.close();
+                     ManagementDashboard.createManagementDashboard();
+                   // ManagementDashboard managementDashboard = new ManagementDashboard();
                    // managementDashboard.getUserLogs();
 
 //                   break;
@@ -88,6 +95,15 @@ public class ManagerController {
         AddpersonPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.AddPerson.createAddPersonView());
 
         return AddpersonPanel;
+    }
+
+
+    public static VBox InventoryView() {
+
+        VBox InventoryViewPanel = new VBox(10);
+        InventoryViewPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.InventoryView.createInventoryView());
+
+        return InventoryViewPanel;
     }
 
 

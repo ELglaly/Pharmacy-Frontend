@@ -2,6 +2,7 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -11,6 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 import javafx.scene.control.Button;
 import org.example.pharmacymanagmentfrontend.Controller.ManagerController;
+import org.example.pharmacymanagmentfrontend.HelloApplication;
+import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
+
+import static org.example.pharmacymanagmentfrontend.HelloApplication.resetTimer;
 
 public class ManagementDashboard extends JFrame {
 
@@ -18,20 +23,25 @@ public class ManagementDashboard extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainPanel;
     private Scene scene;
-    private Button addPersonButton;
-    private Button editPersonButton;
-    private Button userLogsButton;
-    BorderPane root;
+    private static Button addPersonButton;
+    private static Button inventoryButton;
+    private static Button userLogsButton;
+    private static Button updatePersonButton;
+    private static Stage primaryStage;
+    private  static BorderPane root;
 
-    public ManagementDashboard() {
+    public static Scene createManagementDashboard() {
 
-        Stage primaryStage = new Stage();
+        primaryStage = new Stage();
+        HelloApplication.primaryStage = primaryStage;
         // Left Navigation Panel
         root = new BorderPane();
         // Set up the Scene and Stage
-        Scene scene = new Scene(root, 900, 600);
+         primaryScene = new Scene(root, 900, 600);
+        primaryScene.setOnMouseMoved(event -> resetTimer());
+        primaryScene.setOnKeyPressed(event -> resetTimer());
         primaryStage.setTitle("Management Dashboard");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(primaryScene);
         primaryStage.show();
         // Left Panel in JavaFX (VBox layout)
         VBox leftPanel = createLeftPanel();
@@ -39,17 +49,19 @@ public class ManagementDashboard extends JFrame {
         root.setLeft(leftPanel);
         //set the result for the button
         root.setCenter(ManagerController.UserLogsScreen());
+        return primaryScene;
     }
 
     // Create left navigation panel (buttons for switching between screens)
-    private VBox createLeftPanel() {
+    private static VBox createLeftPanel() {
         VBox leftPanel = new VBox(20);  // Reduced spacing to make buttons closer
         leftPanel.setStyle("-fx-background-color: #f1f1f1; -fx-pref-width: 200; -fx-padding: 20;");  // Lighter background with padding
 
         // Buttons with hover effect and styling
         userLogsButton = createStyledButton("User Logs","#f9bf29","#ff9933");
         addPersonButton = createStyledButton("Add Person","#f9bf29","#ff9933");
-        editPersonButton = createStyledButton("Edit Person","#f9bf29","#ff9933");
+        inventoryButton = createStyledButton("Inventory","#f9bf29","#ff9933");
+        updatePersonButton=createStyledButton("Update Person", "#f9bf29", "#ff9933");
 
         userLogsButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
             root.setCenter(ManagerController.UserLogsScreen());
@@ -59,12 +71,15 @@ public class ManagementDashboard extends JFrame {
             root.setCenter(ManagerController.Addperson());
         });
 
-        editPersonButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(ManagerController.UserLogsScreen());
+        inventoryButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            root.setCenter(ManagerController.InventoryView());
+        });
+        updatePersonButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            root.setCenter(ManagerController.updatePersonView());
         });
 
         // Add buttons to the panel
-        leftPanel.getChildren().addAll(userLogsButton, addPersonButton, editPersonButton);
+        leftPanel.getChildren().addAll(userLogsButton, addPersonButton, inventoryButton,updatePersonButton);
 
         // Make sure buttons are centered
         leftPanel.setAlignment(Pos.CENTER);
@@ -100,7 +115,7 @@ public class ManagementDashboard extends JFrame {
 
 
 
-    public void setUserLogs() {
-        userLogs = new UserLogs();
+    public static Stage getprimaryStage() {
+        return primaryStage;
     }
 }

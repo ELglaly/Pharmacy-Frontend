@@ -86,6 +86,11 @@ public abstract class Person {
 
     public abstract void setType();
 
+    public void setType(Person.userTypes Type)
+    {
+        this.Type = Type;
+    }
+
 
 
 
