@@ -30,7 +30,7 @@ public class Inventory {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
         this.available = quantity>0? true:false;
-        this.lowStock = quantity<10? true: false;
+        this.lowStock = quantity<100? true: false;
     }
 
     public Boolean getAvailable() {

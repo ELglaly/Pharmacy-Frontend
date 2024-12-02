@@ -151,7 +151,7 @@ public class InventoryView extends Stage {
      private static void updateLowStockNotification() {
          long lowStockCount = UserGenerator.getInventoryStock().stream().filter(med -> med.getQuantity() <= 10).count();
          if (lowStockCount > 0) {
-             Stage alert = alterMessage("ttention: Low Stock Items Detected \nSome items have low stock. Please restock them soon.",
+             Stage alert = alterMessage("attention: Low Stock Items Detected \nSome items have low stock. Please restock them soon.",
             "Low Stock Warning",
              "OK",null);
              alert.show();

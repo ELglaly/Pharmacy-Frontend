@@ -14,11 +14,11 @@ public class UserGenerator {
     private static List<UserLogs> loginTracker = new ArrayList<>();
     public static List<Inventory> inventoryStock = new ArrayList<>();
 
-    private String[] managerNames = {"Sherif Shawashen"};
-    private String[] pharmacistNames = {"Emma Harris", "Liam Moore", "Ava Taylor", "Noah Anderson", "Isabella Clark"};
-    private String[] technicianNames = {"Mason White", "Mia Walker", "Ethan Hall", "Amelia Lewis", "Lucas Allen"};
-    private String[] cashierNames = {"Benjamin Scott", "Charlotte Young", "Elijah Adams", "Harper King", "Logan Wright"};
-    private String[] patientNames = {"Henry Hill", "Emily Carter", "Jackson Baker", "Abigail Green", "Sebastian Nelson"};
+    private static String[] managerNames = {"Sherif Shawashen"};
+    private static String[] pharmacistNames = {"Emma Harris", "Liam Moore", "Ava Taylor", "Noah Anderson", "Isabella Clark"};
+    private static String[] technicianNames = {"Mason White", "Mia Walker", "Ethan Hall", "Amelia Lewis", "Lucas Allen"};
+    private static String[] cashierNames = {"Benjamin Scott", "Charlotte Young", "Elijah Adams", "Harper King", "Logan Wright"};
+    private static String[] patientNames = {"Henry Hill", "Emily Carter", "Jackson Baker", "Abigail Green", "Sebastian Nelson"};
 
     public UserGenerator() {
 
@@ -94,6 +94,8 @@ public class UserGenerator {
             patient.setType();// Example birth date
             patients.add(patient);
         }
+
+        generateRandomInventory();
     }
 
     public static void updateUser(Person person, String name, String email, String phone, String licenseNumber, String address, LocalDate birthDate, String userType, Date birthDateAsDate) {
@@ -123,7 +125,7 @@ public class UserGenerator {
         return cashiers;
     }
 
-    public List<Patient> getPatients() {
+    public static List<Patient> getPatients() {
         return patients;
     }
 
@@ -201,11 +203,16 @@ public class UserGenerator {
                 return pharmacist;
             }
         }
+
+        for (Patient patient : patients) {
+            if (patient.getUsername().equalsIgnoreCase(username)) {
+                return patient;
+            }
+        }
         return null;
     }
 
-
-                public static void Addlogs() {
+    public static void Addlogs() {
         Random random = new Random();
         for (int i = 0; i < 100; i++) {
             // Randomly pick a user type
@@ -235,6 +242,36 @@ public class UserGenerator {
         }
     }
 
+    public static String generateRandomPrescription() {
+        String[] medications = {
+                "Paracetamol", "Ibuprofen", "Amoxicillin", "Cough Syrup", "Vitamin C",
+                "Aspirin", "Antibiotics", "Metformin", "Insulin", "Morphine"
+        };
+
+        String[] dosages = {"250mg", "500mg", "1000mg", "10ml", "20ml"};
+        String[] durations = {"5 days", "7 days", "10 days", "2 weeks", "1 month"};
+        String[] additionalDetails = {
+                "Take after meals",
+                "Take before bed",
+                "Avoid alcohol",
+                "Consult doctor if symptoms persist",
+                "Store in a cool, dry place"
+        };
+
+        Random random = new Random();
+
+        // Randomly select from each array
+        String medication = medications[random.nextInt(medications.length)];
+        String dosage = dosages[random.nextInt(dosages.length)];
+        String duration = durations[random.nextInt(durations.length)];
+        String details = additionalDetails[random.nextInt(additionalDetails.length)];
+
+        // Format the prescription
+        return String.format(
+                "Medication: %s\nDosage: %s\nDuration: %s\nDetails: %s",
+                medication, dosage, duration, details
+        );
+    }
 
     //generate Inventory Stock
     public static void generateRandomInventory() {
@@ -251,6 +288,15 @@ public class UserGenerator {
             int quantity = random.nextInt(101); // Random quantity between 0 and 100
             inventoryStock.add(new Inventory(medicationName, quantity));
         }
+    }
+
+    public static Inventory findMedicine(String medicationName) {
+        for(Inventory medicine: UserGenerator.inventoryStock)
+            if(medicine.getName().equalsIgnoreCase(medicationName))
+            {
+                return medicine;
+            }
+        return null;
     }
 
 }
