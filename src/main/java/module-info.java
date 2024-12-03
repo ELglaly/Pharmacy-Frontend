@@ -3,7 +3,7 @@ module org.example.pharmacymanagmentfrontend {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
-    requires jcalendar;
+    //requires jcalendar;
 
 
     opens org.example.pharmacymanagmentfrontend to javafx.fxml;

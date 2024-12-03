@@ -183,7 +183,7 @@ public class PrescriptionView {
         return button;
     }
 
-    private static void showAlert(String title, String message, Alert.AlertType alertType) {
+    static void showAlert(String title, String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(message);

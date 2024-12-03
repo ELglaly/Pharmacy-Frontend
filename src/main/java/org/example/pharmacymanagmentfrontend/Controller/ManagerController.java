@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import org.example.pharmacymanagmentfrontend.Model.UserLogs;
+import org.example.pharmacymanagmentfrontend.View.InsuranceClaim;
 import org.example.pharmacymanagmentfrontend.View.ManagementDashboard;
 import org.example.pharmacymanagmentfrontend.View.PrescriptionView;
 
@@ -55,7 +56,9 @@ public class ManagerController {
 //               case PharmacyManager: {
                     Stage stage =  (Stage)loginbutton.getScene().getWindow();
                     stage.close();
-                     PrescriptionView.createPrescriptionView();
+                    InsuranceClaim.createInsuranceClaimView();
+                     //PrescriptionView.createPrescriptionView();
+
                  //    ManagementDashboard.createManagementDashboard();
                    // ManagementDashboard managementDashboard = new ManagementDashboard();
                    // managementDashboard.getUserLogs();
