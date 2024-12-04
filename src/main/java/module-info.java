@@ -6,7 +6,6 @@ module org.example.pharmacymanagmentfrontend {
     requires jcalendar;
     requires java.xml.crypto;
 
-
     opens org.example.pharmacymanagmentfrontend to javafx.fxml;
     exports org.example.pharmacymanagmentfrontend;
     exports org.example.pharmacymanagmentfrontend.Model;
