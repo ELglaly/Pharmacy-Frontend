@@ -3,12 +3,11 @@ module org.example.pharmacymanagmentfrontend {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
-    //requires jcalendar;
-
 
     opens org.example.pharmacymanagmentfrontend to javafx.fxml;
     exports org.example.pharmacymanagmentfrontend;
     exports org.example.pharmacymanagmentfrontend.Model;
     opens org.example.pharmacymanagmentfrontend.Model to javafx.fxml;
     opens org.example.pharmacymanagmentfrontend.Controller to javafx.fxml;
+    exports org.example.pharmacymanagmentfrontend.Controller;
 }
