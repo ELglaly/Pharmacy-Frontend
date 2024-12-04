@@ -15,9 +15,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.Model.Brush;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
 
+import java.text.BreakIterator;
 import java.util.Map;
 
 import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
@@ -25,9 +27,15 @@ import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage
 
 public class CheckoutView {
     static Boolean promocodeApplied = false;
-    static Button confirmButton = new Button("Confirm Checkout");
+    static Button confirmButton;
     static TextField signatureField = new TextField();
     static Pane pane = new Pane();
+    static ComboBox<String> paymentMethods = new ComboBox<>();
+    static TextField cardNumberField;
+    static TextField expiryField;
+    static TextField cvvField;
+    static Group group = new Group();
+
 
     public static void addCheckoutView(Prescription prescription) {
         Stage stage = new Stage();
@@ -63,34 +71,66 @@ public class CheckoutView {
         itemsTable.setPrefHeight(200);
 
         // Promocode Section
-        VBox promocodeSection = createPromocodeSection(prescription, totalValue);
+        VBox promocodeSection = createPromocodeSection(prescription);
 
         // Buttons Section
         Button cancelButton = new Button("Cancel");
-        confirmButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14px;");
+        confirmButton =ManagementDashboard.createStyledButton("Checkout", "#2ecc71", "#27ae60");
         cancelButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 14px;");
 
         HBox buttonBox = new HBox(15, confirmButton, cancelButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         confirmButton.setOnAction(e -> {
-            System.out.println("Confirm button clicked");
             String signature = signatureField.getText().trim();
-            if (signature.isEmpty() || !pane.getChildren().stream().anyMatch(node -> node instanceof Circle)) {
-                alterMessage("Signature is required to complete the transaction.", "Error", "OK", null);
+            if (!(!signature.isEmpty() || group.getChildren().stream().anyMatch(node -> node instanceof Circle))) {
+                System.out.println(group.getChildren().stream().anyMatch(node -> node instanceof Circle));
+                Stage alert = alterMessage("Please Add Signature.",
+                        "Signature",
+                        "OK",null);
+                alert.show();
             }
-            alterMessage("Checkout Confirmed for " + prescription.getPatient().getName(), "Checkout", "OK", null);
+            else if (paymentMethods.getValue() == null) {
+                Stage alert = alterMessage("Please add Payment Method.",
+                        "Payment Method",
+                        "OK",null);
+                alert.show();
+            }
+            else if(paymentMethods.getValue().equalsIgnoreCase("Credit Card") || paymentMethods.getValue().equalsIgnoreCase("Debit Card") )
+            {
+                if(cardNumberField.getText().isEmpty() || cvvField.getText().isEmpty() || expiryField.getText().isEmpty())
+                {
+                    Stage alert = alterMessage("Please add Card Details.",
+                            "Payment Method",
+                            "OK",null);
+                    alert.show();
+                }
+                else {
+                    Stage alert = alterMessage(
+                            "Checkout completed successfully!\nThank you for your purchase.",
+                            "Success",
+                            "OK",null
+                    );
+                    alert.show();
+                    stage.close();
+                }
+            }
+            else if(paymentMethods.getValue().equalsIgnoreCase("insurance"))
+            {
+                PharmacyPersonnelController.showInsurancClaim(prescription);
+            }
         });
 
         cancelButton.setOnAction(event -> stage.close());
 
         // Main Layout: Split into two columns
         HBox mainLayout = new HBox(20);
+        mainLayout.setStyle("-fx-background-color: #f8f8f8;");
         mainLayout.setPadding(new Insets(20));
         mainLayout.setAlignment(Pos.TOP_CENTER);
 
         VBox leftColumn = new VBox(20, titleLabel, customerInfo, itemsTable, promocodeSection);
-        VBox rightColumn = new VBox(20, showSignatureScreen() ,addPaymentMethodsUI(), buttonBox);
+        VBox rightColumn = new VBox(20, showSignatureScreen() ,addPaymentMethodsUI(prescription), buttonBox);
 
         mainLayout.getChildren().addAll(leftColumn, rightColumn);
 
@@ -139,7 +179,7 @@ public class CheckoutView {
         return itemsTable;
     }
 
-    private static VBox createPromocodeSection(Prescription prescription, Label totalValue) {
+    private static VBox createPromocodeSection(Prescription prescription) {
         TextField promoCodeField = new TextField();
         promoCodeField.setPromptText("Enter Promocode");
 
@@ -155,10 +195,9 @@ public class CheckoutView {
                 float discountedPrice = prescription.getTotalPrice() * 0.9f;
                 // Update the prescription total price
                 prescription.setTotalPrice(discountedPrice);
-                totalValue.setText(String.format("Price after discount: $%.2f", discountedPrice));
 
                 // Provide feedback
-                promoFeedback.setText("Promocode applied successfully!");
+                promoFeedback.setText(String.format("Promocode applied successfully!\nPrice after discount: $%.2f", discountedPrice));
                 promoFeedback.setStyle("-fx-text-fill: green;");
                 promocodeApplied = true; // Ensure promocode is applied only once
             } else {
@@ -193,7 +232,7 @@ public class CheckoutView {
 
     private static Pane sigintureBrush() {
         Brush brush = new Brush();
-        Group group = new Group();
+        group = new Group();
         Pane pane = new Pane(group); // Use a Pane to control size
         pane.setStyle("-fx-background-color: white");
         pane.setPrefSize(100, 50); // Set width and height for the pane
@@ -211,15 +250,14 @@ public class CheckoutView {
         return pane;
     }
 
-    public static VBox addPaymentMethodsUI() {
+    public static VBox addPaymentMethodsUI(Prescription prescription) {
         VBox paymentLayout = new VBox(10);
         paymentLayout.setPadding(new Insets(20));
         paymentLayout.setAlignment(Pos.CENTER);
 
         // Payment method selection
         Label paymentLabel = new Label("Select Payment Method:");
-        ComboBox<String> paymentMethods = new ComboBox<>();
-        paymentMethods.getItems().addAll("Cash", "Debit Card", "Credit Card");
+        paymentMethods.getItems().addAll("Cash", "Debit Card", "Credit Card","Insurance");
         paymentMethods.setPromptText("Choose payment method");
 
         // Dynamic input fields for payment details
@@ -234,13 +272,13 @@ public class CheckoutView {
             if ("Cash".equals(selectedMethod)) {
                 paymentDetailsBox.getChildren().add(new Label("Please proceed to pay cash at the counter."));
             } else if ("Debit Card".equals(selectedMethod) || "Credit Card".equals(selectedMethod)) {
-                TextField cardNumberField = new TextField();
+                 cardNumberField = new TextField();
                 cardNumberField.setPromptText("Card Number");
 
-                TextField expiryField = new TextField();
+                 expiryField = new TextField();
                 expiryField.setPromptText("MM/YY");
 
-                TextField cvvField = new TextField();
+                 cvvField = new TextField();
                 cvvField.setPromptText("CVV");
 
 
@@ -250,19 +288,6 @@ public class CheckoutView {
                 );
             }
         });
-
-        // Finalize payment button
-//        confirmButton.setOnAction(event -> {
-//            String selectedMethod = paymentMethods.getValue();
-//            if ("Cash".equals(selectedMethod)) {
-//                alterMessage("Thank you for paying with cash.","Payment Successful", "OK", null);
-//            } else if ("Debit Card".equals(selectedMethod) || "Credit Card".equals(selectedMethod)) {
-//                alterMessage("Thank you for paying with Card.","Payment Successful", "OK", null);
-//
-//            } else {
-//                alterMessage("Please select a payment method.","Payment Failed", "OK", null);
-//            }
-//        });
 
         paymentLayout.getChildren().addAll(paymentLabel, paymentMethods, paymentDetailsBox);
         return paymentLayout;

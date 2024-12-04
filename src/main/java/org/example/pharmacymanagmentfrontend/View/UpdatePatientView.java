@@ -1,6 +1,5 @@
 package org.example.pharmacymanagmentfrontend.View;
 
-import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,19 +18,14 @@ import java.util.Date;
 
 import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage;
 
-public class UpdatePerson {
+public class UpdatePatientView {
     private static TextField nameField = new TextField();
     private static TextField usernameField = new TextField();
-    private static TextField passwordField = new TextField();
     private static TextField emailField = new TextField();
     private static TextField phoneField = new TextField();
-    private static TextField licenseField = new TextField();
     private static TextField addressField = new TextField();
     private static TextField searchField=new TextField();
-    private static  Label feedbackLabel = new Label();
-    private static ComboBox<String> userTypeCombo = new ComboBox<>(FXCollections.observableArrayList(
-            "PharmacyManager", "Pharmacist", "PharmacyTechnician", "Cashier", "Patient"
-    ));
+    private static Label feedbackLabel = new Label();
     private static DatePicker birthDatePicker = new DatePicker();
     private static Button submitButton;
     private static Person person;
@@ -42,8 +36,8 @@ public class UpdatePerson {
         root.setStyle("-fx-background-color: #f8f8f8; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
 
         // Header
-        Label headerText = new Label("Update Person");
-        headerText.setFont(Font.font(28));
+        Label headerText = new Label("Update Patient");
+        headerText.setFont(Font.font( 28));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
         headerText.setUnderline(true);
 
@@ -78,13 +72,13 @@ public class UpdatePerson {
         searchPanel.getChildren().addAll(headpanel);
         root.getChildren().add(searchPanel);
 
-       // feedbackLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;"); // Red text for errors
+        // feedbackLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;"); // Red text for errors
         root.getChildren().add(feedbackLabel);
         // Form
         root.getChildren().add(createForm());
 
         // Submit Button
-        submitButton = ManagementDashboard.createStyledButton("Update Person", "#2ecc71", "#27ae60");
+        submitButton = ManagementDashboard.createStyledButton("Update Patient", "#2ecc71", "#27ae60");
         submitButton.setOnAction(event -> handleUpdateSubmit());
 
         HBox buttonContainer = new HBox(submitButton);
@@ -104,10 +98,8 @@ public class UpdatePerson {
         addLabeledFieldToGrid(formGrid, "Name:", nameField, 0);
         addLabeledFieldToGrid(formGrid, "Email:", emailField, 1);
         addLabeledFieldToGrid(formGrid, "Phone:", phoneField, 2);
-        addLabeledFieldToGrid(formGrid, "License Number:", licenseField, 3);
-        addLabeledFieldToGrid(formGrid, "Address:", addressField, 4);
-        addLabeledFieldToGrid(formGrid, "Birth Date:", birthDatePicker, 5);
-        addLabeledFieldToGrid(formGrid, "User Type:", userTypeCombo, 6);
+        addLabeledFieldToGrid(formGrid, "Address:", addressField, 3);
+        addLabeledFieldToGrid(formGrid, "Birth Date:", birthDatePicker, 4);
 
         return formGrid;
     }
@@ -129,24 +121,20 @@ public class UpdatePerson {
         nameField.setText("");
         emailField.setText("");
         phoneField.setText("");
-        licenseField.setText("");
         addressField.setText("");
         birthDatePicker.setValue(person.getBirthDate().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate());
-        userTypeCombo.setValue(person.getType().toString());
     }
 
     private static void DisplayPersonData() {
         nameField.setText(person.getName());
         emailField.setText(person.getEmail());
         phoneField.setText(person.getPhone());
-        licenseField.setText(person.getLicenseNumber());
         addressField.setText(person.getAddress());
         birthDatePicker.setValue(person.getBirthDate().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate());
-        userTypeCombo.setValue(person.getType().toString());
     }
 
     private static void addLabeledFieldToGrid(GridPane grid, String labelText, Control inputField, int rowIndex) {
@@ -162,31 +150,30 @@ public class UpdatePerson {
             String name = nameField.getText().trim();
             String email = emailField.getText().trim();
             String phone = phoneField.getText().trim();
-            String licenseNumber = licenseField.getText().trim();
             String address = addressField.getText().trim();
             LocalDate birthDate = birthDatePicker.getValue();
-            String userType = userTypeCombo.getValue();
             // Example: Convert LocalDate to Date if needed
             Date birthDateAsDate = birthDate == null ? null : Date.from(birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            UserGenerator.updateUser(person,name,email,phone,licenseNumber,address,birthDate,userType,birthDateAsDate);
+            UserGenerator.updateUser(person,name,email,phone,"licenseNumber",address,birthDate,"Patient",birthDateAsDate);
             Stage alert = alterMessage("",
                     "Successfully Updated",
                     "OK",null);
             alert.show();
             resetByUsername();
 
-       } else {
+        } else {
             feedbackLabel.setText("Some Fields are Empty or Size less than 3 ");
         }
     }
 
     private static boolean validateFields() {
-        TextField[] fields = {nameField, emailField, phoneField, licenseField, addressField};
+        TextField[] fields = {nameField, emailField, phoneField, addressField};
         for (TextField field : fields) {
             if (field.getText().trim().isEmpty() || field.getText().trim().length()<3) {
                 return false;
             }
         }
-        return birthDatePicker.getValue() != null && userTypeCombo.getValue() != null;
+        return birthDatePicker.getValue() != null ;
     }
 }
+

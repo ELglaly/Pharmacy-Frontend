@@ -2,16 +2,17 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Model.Prescription;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class InsuranceClaim extends Stage {
 
-    public static void createInsuranceClaimView() {
+    public static ScrollPane createInsuranceClaimView(Prescription prescription) {
         Stage stage = new Stage();
         stage.setTitle("Insurance Claim Submission");
 
@@ -22,7 +23,7 @@ public class InsuranceClaim extends Stage {
         root.setVgap(20); // Vertical gap between rows
 
         // Set background color
-        root.setStyle("-fx-background-color: lightblue;");
+        root.setStyle("-fx-background-color: #f8f8f8;");
 
         // Section: Patient Information
         Label patientInfoLabel = new Label("Patient Information:");
@@ -31,12 +32,21 @@ public class InsuranceClaim extends Stage {
 
         Label nameLabel = new Label("Name:");
         TextField nameField = new TextField();
-        nameField.setPromptText("Enter patient's name");
+        nameField.setText(prescription.getPatient().getName());
         root.add(nameLabel, 0, 1);
         root.add(nameField, 1, 1);
 
         Label dobLabel = new Label("Date of Birth:");
         DatePicker dobPicker = new DatePicker();
+        if(prescription.getPatient().getBirthDate()==null){
+            dobPicker.setValue(LocalDate.now());
+        }
+        else {
+            dobPicker.setValue((prescription.getPatient().getBirthDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()));
+        }
+
         root.add(dobLabel, 0, 2);
         root.add(dobPicker, 1, 2);
 
@@ -46,33 +56,17 @@ public class InsuranceClaim extends Stage {
         root.add(insuranceNumberLabel, 0, 3);
         root.add(insuranceNumberField, 1, 3);
 
-        Label contactLabel = new Label("Contact Info:");
-        TextField contactField = new TextField();
-        contactField.setPromptText("Enter contact details");
-        root.add(contactLabel, 0, 4);
-        root.add(contactField, 1, 4);
-
         // Section: Prescription Details
         Label prescriptionDetailsLabel = new Label("Prescription Details:");
         prescriptionDetailsLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
         root.add(prescriptionDetailsLabel, 0, 5, 2, 1);
 
-        Label prescriptionNameLabel = new Label("Prescription Name:");
-        TextField prescriptionNameField = new TextField();
-        prescriptionNameField.setPromptText("Enter prescription name");
-        root.add(prescriptionNameLabel, 0, 6);
-        root.add(prescriptionNameField, 1, 6);
 
         Label prescriptionDateLabel = new Label("Date of Prescription:");
-        DatePicker prescriptionDatePicker = new DatePicker();
+        DatePicker prescriptionDatePicker = new DatePicker(LocalDate.now());
         root.add(prescriptionDateLabel, 0, 7);
         root.add(prescriptionDatePicker, 1, 7);
 
-        Label pharmacistNameLabel = new Label("Pharmacist's Name:");
-        TextField pharmacistNameField = new TextField();
-        pharmacistNameField.setPromptText("Enter pharmacist's name");
-        root.add(pharmacistNameLabel, 0, 8);
-        root.add(pharmacistNameField, 1, 8);
 
         // Section: Claim Details
         Label claimDetailsLabel = new Label("Claim Details:");
@@ -91,38 +85,32 @@ public class InsuranceClaim extends Stage {
         root.add(claimDatePicker, 1, 11);
 
         Label claimAmountLabel = new Label("Claim Amount:");
-        TextField claimAmountField = new TextField();
+        TextField claimAmountField = new TextField(String.valueOf(prescription.getTotalPrice()));
         claimAmountField.setPromptText("Enter claim amount");
         root.add(claimAmountLabel, 0, 12);
         root.add(claimAmountField, 1, 12);
 
         Label claimDescriptionLabel = new Label("Description:");
-        TextArea claimDescriptionArea = new TextArea();
+        TextArea claimDescriptionArea = new TextArea(prescription.toString());
         claimDescriptionArea.setPromptText("Enter claim description");
         claimDescriptionArea.setPrefHeight(100);
         root.add(claimDescriptionLabel, 0, 13);
         root.add(claimDescriptionArea, 1, 13);
 
         // Action Buttons with colors
-        Button submitButton = new Button("Submit");
-        submitButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Green button
+        Button submitButton = ManagementDashboard.createStyledButton("Submit", "#2ecc71", "#27ae60");
 
-        Button clearButton = new Button("Clear");
-        clearButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Red button
+        Button clearButton = ManagementDashboard.createStyledButton("Clear", "#2ecc71", "#27ae60");
 
-        Button backButton = new Button("Back");
-        backButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Blue button
 
-        HBox buttonBox = new HBox(15, submitButton, clearButton, backButton);
+        HBox buttonBox = new HBox(15, submitButton, clearButton);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         root.add(buttonBox, 0, 14, 2, 1);
 
         // Button Actions
         submitButton.setOnAction(event -> {
             if (nameField.getText().isEmpty() || dobPicker.getValue() == null ||
-                    insuranceNumberField.getText().isEmpty() || contactField.getText().isEmpty() ||
-                    prescriptionNameField.getText().isEmpty() || prescriptionDatePicker.getValue() == null ||
-                    pharmacistNameField.getText().isEmpty() || claimAmountField.getText().isEmpty()) {
+                    insuranceNumberField.getText().isEmpty() || prescriptionDatePicker.getValue() == null || claimAmountField.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields are required!");
             } else {
                 claimIdField.setText("CLM-" + Math.random() * 10000);
@@ -134,28 +122,21 @@ public class InsuranceClaim extends Stage {
             nameField.clear();
             dobPicker.setValue(null);
             insuranceNumberField.clear();
-            contactField.clear();
-            prescriptionNameField.clear();
             prescriptionDatePicker.setValue(null);
-            pharmacistNameField.clear();
             claimAmountField.clear();
             claimDescriptionArea.clear();
             claimIdField.setText("Auto-generated");
         });
 
-        backButton.setOnAction(event -> stage.close());
 
         // Wrap in ScrollPane for scrollability
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(root);
         scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("fx-background-color: #f8f8f8;");
 
         // Set up the scene and stage
-        Scene scene = new Scene(scrollPane, 650, 500); // Adjusted height
-
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        return scrollPane;
     }
 
     private static void showAlert(Alert.AlertType alertType, String title, String message) {
