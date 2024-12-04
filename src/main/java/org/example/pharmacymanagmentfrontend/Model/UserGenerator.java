@@ -265,6 +265,7 @@ public class UserGenerator {
         String dosage = dosages[random.nextInt(dosages.length)];
         String duration = durations[random.nextInt(durations.length)];
         String details = additionalDetails[random.nextInt(additionalDetails.length)];
+        float price =random.nextFloat(200);
 
         // Format the prescription
         return String.format(
@@ -286,7 +287,8 @@ public class UserGenerator {
         for (int i = 0; i < 50; i++) {
             String medicationName = medications[random.nextInt(medications.length)];
             int quantity = random.nextInt(101); // Random quantity between 0 and 100
-            inventoryStock.add(new Inventory(medicationName, quantity));
+            float price =random.nextFloat(200);
+            inventoryStock.add(new Inventory(medicationName, quantity,price));
         }
     }
 

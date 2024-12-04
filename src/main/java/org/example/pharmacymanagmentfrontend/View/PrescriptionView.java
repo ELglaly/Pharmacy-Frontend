@@ -9,14 +9,17 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Controller.PatientController;
 import org.example.pharmacymanagmentfrontend.Model.Inventory;
 import org.example.pharmacymanagmentfrontend.Model.Patient;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
+import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
 
 import java.util.HashMap;
 
 import static javafx.application.Application.launch;
+import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryStage;
 import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage;
 
 public class PrescriptionView {
@@ -114,13 +117,14 @@ public class PrescriptionView {
                 Prescription prescription =new Prescription(patient,prescriptionName, dosage,duration,details);
                 patient.addPrescriptions(prescription);
                 showAlert("Success", "Prescription saved successfully!", Alert.AlertType.INFORMATION);
-
                 // Clear the per
                 usernameField.clear();
                 nameField.clear();
                 dosageField.clear();
                 durationField.clear();
                 detailsArea.clear();
+                stage.close();
+                PatientController.CheckoutView(prescription);
             }
         });
 
@@ -163,8 +167,8 @@ public class PrescriptionView {
 
         VBox root = new VBox(header, content);
 
-        Scene scene = new Scene(root, 800, 600);
-        stage.setScene(scene);
+        primaryScene = new Scene(root, 800, 600);
+        stage.setScene(primaryScene);
         stage.show();
     }
 
