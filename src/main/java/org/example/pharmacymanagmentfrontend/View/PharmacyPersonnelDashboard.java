@@ -3,18 +3,15 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javax.swing.*;
-import java.awt.*;
-import javafx.scene.control.Button;
-import org.example.pharmacymanagmentfrontend.Controller.ManagerController;
 import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.HelloApplication;
+import org.example.pharmacymanagmentfrontend.Model.Patient;
+import org.example.pharmacymanagmentfrontend.Model.Prescription;
+
 import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
 
 import static org.example.pharmacymanagmentfrontend.HelloApplication.resetTimer;
@@ -27,6 +24,7 @@ public class PharmacyPersonnelDashboard {
     private static javafx.scene.control.Button UpdatePresceiptionButton;
     private static javafx.scene.control.Button showhistoryButton;
     private static javafx.scene.control.Button insuranceClaimButton;
+    private static javafx.scene.control.Button insuranceinterfaceButton;
     private static Stage primaryStage;
     private  static BorderPane root;
 
@@ -63,6 +61,7 @@ public class PharmacyPersonnelDashboard {
         UpdatePatientButton = createStyledButton("Update Patient","#f9bf29","#ff9933");
         showhistoryButton=createStyledButton("Show history", "#f9bf29", "#ff9933");
         insuranceClaimButton=createStyledButton("Insurance Claim", "#f9bf29", "#ff9933");
+        insuranceinterfaceButton=createStyledButton("Insurance", "#f9bf29", "#ff9933");
 
         UpdatePresceiptionButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
             root.setCenter(PharmacyPersonnelController.addPrescriptionView());
@@ -76,26 +75,23 @@ public class PharmacyPersonnelDashboard {
             root.setCenter(PharmacyPersonnelController.updatePatientView());
         });
         showhistoryButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.showPrescriptionHistroy());
+            root.setCenter(PharmacyPersonnelController.showPatientHistroyVIew());
         });
-        showhistoryButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.showInsurancClaim());
+        insuranceClaimButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            Patient patient=new Patient();
+            root.setCenter(PharmacyPersonnelController.showInsurancClaim(new Prescription(patient,"","","","")));
+        });
+        insuranceinterfaceButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            root.setCenter(PharmacyPersonnelController.showInsuranceInterface());
         });
 
 
         // Add buttons to the panel
-        leftPanel.getChildren().addAll(UpdatePresceiptionButton, addPatientButton,showhistoryButton, UpdatePatientButton,showhistoryButton);
+        leftPanel.getChildren().addAll(UpdatePresceiptionButton, addPatientButton,insuranceClaimButton,insuranceinterfaceButton, UpdatePatientButton,showhistoryButton);
 
         // Make sure buttons are centered
         leftPanel.setAlignment(Pos.CENTER);
 
         return leftPanel;
-    }
-
-    // Helper method to create styled buttons
-
-
-    public static Stage getprimaryStage() {
-        return primaryStage;
     }
 }

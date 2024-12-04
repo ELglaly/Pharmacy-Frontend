@@ -49,9 +49,8 @@ public class PrescriptionView {
         detailsArea.setWrapText(true);
 
         Button saveButton = createStyledButton("Save", "✓");
-        Button viewButton = createStyledButton("View Data", "📋");
 
-        leftPane.getChildren().addAll(formTitle, usernameField, nameField, dosageField, durationField, detailsArea, saveButton, viewButton);
+        leftPane.getChildren().addAll(formTitle, usernameField, nameField, dosageField, durationField, detailsArea, saveButton);
 
         // Right Pane: Inventory List
         VBox rightPane = new VBox(10);
@@ -124,38 +123,6 @@ public class PrescriptionView {
         });
 
         // View Data Button Functionality
-        viewButton.setOnAction(event -> {
-            Stage dataStage = new Stage();
-            dataStage.setTitle("Patient Data");
-
-            VBox dataBox = new VBox(10);
-            dataBox.setPadding(new Insets(20));
-
-            Label dataLabel = new Label("Saved Patient Data:");
-            dataLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-
-            TableView<Patient> tableView = new TableView<>();
-
-// Username Column
-            TableColumn<Patient, String> usernameColumn = new TableColumn<>("Username");
-            usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-            // Prescription Info Column
-            TableColumn<Patient, String> prescriptionColumn = new TableColumn<>("Prescription Info");
-            prescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("prescriptionString")); // Ensure this matches your Patient class property
-            prescriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-// Add Columns to TableView
-            tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-            tableView.getColumns().addAll(usernameColumn, prescriptionColumn);
-            tableView.getItems().addAll(UserGenerator.getPatients());
-
-            dataBox.getChildren().addAll(dataLabel, tableView);
-
-            Scene dataScene = new Scene(dataBox, 600, 400);
-            dataStage.setScene(dataScene);
-            dataStage.show();
-        });
 
         HBox content = new HBox(20, leftPane, rightPane);
         content.setPadding(new Insets(20));

@@ -90,6 +90,10 @@ public class ManagementDashboard extends JFrame {
     // Helper method to create styled buttons
     public static Button createStyledButton(String text,String backgroundColor, String backgroundColorEdit) {
         Button button = new Button(text);
+        button.setPrefWidth(200);
+        button.setMinWidth(200);
+        button.setMaxWidth(200);
+
         button.setStyle(String.format(
                 "-fx-background-color: %s; -fx-text-fill: white; -fx-font-size: 14px; " +
                         "-fx-padding: 10px 20px; -fx-background-radius: 25px; " +

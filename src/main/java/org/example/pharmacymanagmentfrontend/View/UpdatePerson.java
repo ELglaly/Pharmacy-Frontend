@@ -39,11 +39,11 @@ public class UpdatePerson {
     public static VBox createUpdatePersonView() {
         VBox root = new VBox(20);
         root.setPadding(new Insets(20));
-        root.setStyle("-fx-background-color: #ffffff; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
+        root.setStyle("-fx-background-color: #f8f8f8; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
 
         // Header
         Label headerText = new Label("Update Person");
-        headerText.setFont(Font.font("Arial", 28));
+        headerText.setFont(Font.font(28));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
         headerText.setUnderline(true);
 
@@ -84,8 +84,7 @@ public class UpdatePerson {
         root.getChildren().add(createForm());
 
         // Submit Button
-        submitButton = new Button("Update Person");
-        submitButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+        submitButton = ManagementDashboard.createStyledButton("Update Person", "#2ecc71", "#27ae60");
         submitButton.setOnAction(event -> handleUpdateSubmit());
 
         HBox buttonContainer = new HBox(submitButton);
@@ -103,12 +102,12 @@ public class UpdatePerson {
         formGrid.setAlignment(Pos.CENTER_LEFT);
 
         addLabeledFieldToGrid(formGrid, "Name:", nameField, 0);
-        addLabeledFieldToGrid(formGrid, "Email:", emailField, 2);
-        addLabeledFieldToGrid(formGrid, "Phone:", phoneField, 3);
-        addLabeledFieldToGrid(formGrid, "License Number:", licenseField, 4);
-        addLabeledFieldToGrid(formGrid, "Address:", addressField, 5);
-        addLabeledFieldToGrid(formGrid, "Birth Date:", birthDatePicker, 6);
-        addLabeledFieldToGrid(formGrid, "User Type:", userTypeCombo, 7);
+        addLabeledFieldToGrid(formGrid, "Email:", emailField, 1);
+        addLabeledFieldToGrid(formGrid, "Phone:", phoneField, 2);
+        addLabeledFieldToGrid(formGrid, "License Number:", licenseField, 3);
+        addLabeledFieldToGrid(formGrid, "Address:", addressField, 4);
+        addLabeledFieldToGrid(formGrid, "Birth Date:", birthDatePicker, 5);
+        addLabeledFieldToGrid(formGrid, "User Type:", userTypeCombo, 6);
 
         return formGrid;
     }

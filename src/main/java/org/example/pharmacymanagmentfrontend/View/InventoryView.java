@@ -31,7 +31,7 @@ public class InventoryView extends Stage {
 
     public static VBox createInventoryView() {
         VBox root = new VBox(20); // VBox with 20px spacing between elements
-        root.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 20px;");
+        root.setStyle("-fx-background-color: #f8f8f8; -fx-padding: 20px;");
         // Header Section
         Label headerText = new Label("Inventory Stocks");
         headerText.setFont(new Font("Arial", 24));

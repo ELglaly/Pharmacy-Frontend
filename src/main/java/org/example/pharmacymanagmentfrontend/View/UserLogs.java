@@ -22,10 +22,10 @@ public class UserLogs extends Stage {
     // Top Sectio
     public static VBox AddUserLogsView() {
         VBox root = new VBox(20); // VBox with 20px spacing between elements
-        root.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 20px;");
+        root.setStyle("-fx-background-color: #f8f8f8; -fx-padding: 20px;");
         // Header Section
         Label headerText = new Label("User Logs");
-        headerText.setFont(new Font("Arial", 24));
+        headerText.setFont(new Font(24));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
         root.getChildren().add(headerText);
         // Search Section

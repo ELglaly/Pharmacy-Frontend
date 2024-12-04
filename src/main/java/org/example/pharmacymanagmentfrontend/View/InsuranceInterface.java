@@ -2,18 +2,15 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class InsuranceInterface extends Stage {
 
-    public static void createInsuranceInterfaceView() {
+    public static ScrollPane createInsuranceInterfaceView() {
         Stage stage = new Stage();
         stage.setTitle("Insurance Claim Management");
 
@@ -21,7 +18,7 @@ public class InsuranceInterface extends Stage {
         root.setPadding(new Insets(15));
         root.setHgap(10);
         root.setVgap(15);
-        root.setStyle("-fx-background-color: #f0f8ff;");
+        root.setStyle("-fx-background-color: #f8f8f8;");
 
         // Style constants
         String sectionHeaderStyle = "-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #004080;";
@@ -119,26 +116,15 @@ public class InsuranceInterface extends Stage {
         updateStatusButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;");
         root.add(updateStatusButton, 1, 13);
 
-        // Back Button
-        Button backButton = new Button("Back");
-        backButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold;");
-        HBox buttonBox = new HBox(10, backButton);
-        buttonBox.setAlignment(Pos.CENTER);
-        root.add(buttonBox, 0, 14, 2, 1);
-
         // Button Actions
         searchButton.setOnAction(event -> showAlert(Alert.AlertType.INFORMATION, "Search", "Searching..."));
         saveChangesButton.setOnAction(event -> showAlert(Alert.AlertType.INFORMATION, "Save", "Changes saved."));
         updateStatusButton.setOnAction(event -> showAlert(Alert.AlertType.INFORMATION, "Update Status", "Status updated."));
-        backButton.setOnAction(event -> stage.close());
 
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 
-        Scene scene = new Scene(scrollPane, 650, 600);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        return scrollPane;
     }
 
     private static void showAlert(Alert.AlertType alertType, String title, String message) {

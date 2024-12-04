@@ -33,7 +33,7 @@ public class AddPatientView {
         // Create the root VBox for the form
         VBox root = new VBox(20); // 20px spacing
         root.setPadding(new Insets(20));
-        root.setStyle("-fx-background-color: #ffffff; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
+        root.setStyle("-fx-background-color: #f8f8f8; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
 
         // Header Section
         Label headerText = new Label("Add Patient");

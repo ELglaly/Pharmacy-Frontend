@@ -35,11 +35,11 @@ public class AddPerson extends JFrame {
         // Create the root VBox for the form
         VBox root = new VBox(20); // 20px spacing
         root.setPadding(new Insets(20));
-        root.setStyle("-fx-background-color: #ffffff; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
+        root.setStyle("-fx-background-color: #f8f8f8; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
 
         // Header Section
         Label headerText = new Label("Add Person");
-        headerText.setFont(Font.font("Arial", 28));
+        headerText.setFont(Font.font( 28));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
         headerText.setUnderline(true); // Adds an underline to the header
         HBox headerTextContainer = new HBox(headerText);
@@ -102,8 +102,6 @@ public class AddPerson extends JFrame {
         Label label = new Label(labelText);
         label.setFont(Font.font("Arial", 16));
         label.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
-
-
         HBox fieldBox = new HBox(10); // 10px spacing
         fieldBox.setAlignment(Pos.CENTER_LEFT);
         fieldBox.getChildren().addAll(label, field);
@@ -125,11 +123,6 @@ public class AddPerson extends JFrame {
             Date birthDate = birthDateChooser.getDate();
             String userType = (String) userTypeCombo.getSelectionModel().getSelectedItem();
 
-            // Create the new person (you can use these values to create a new instance of your class)
-            System.out.println("Adding new person: " + name + ", " + username + ", " + email + ", " + userType);
-
-            // Here you can further process and save the user data as needed
-            // For example, create a new Person object or save to a database
         }
     }
 
