@@ -23,12 +23,9 @@ public class AddPatientView {
 
     private static TextField nameField;
     private static TextField usernameField;
-    private static TextField passwordField;
     private static TextField emailField;
     private static TextField phoneField;
-    private static TextField licenseField;
     private static TextField addressField;
-    private static ComboBox<String> userTypeCombo;
     private static SpinnerDateModel birthDateChooser;
     private static Button submitButton;
 
@@ -39,7 +36,7 @@ public class AddPatientView {
         root.setStyle("-fx-background-color: #ffffff; -fx-border-color: #dcdcdc; -fx-border-width: 1px; -fx-border-radius: 8px;");
 
         // Header Section
-        Label headerText = new Label("Add Person");
+        Label headerText = new Label("Add Patient");
         headerText.setFont(Font.font("Arial", 28));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
         headerText.setUnderline(true); // Adds an underline to the header
@@ -54,7 +51,7 @@ public class AddPatientView {
         root.getChildren().add(createForm());
 
         // Add Submit Button
-        submitButton = ManagementDashboard.createStyledButton("Add Person", "#2ecc71", "#27ae60");
+        submitButton = ManagementDashboard.createStyledButton("Add Patient", "#2ecc71", "#27ae60");
         submitButton.setOnAction(event -> handleSubmit());
 
         HBox buttonContainer = new HBox(submitButton);
@@ -77,14 +74,8 @@ public class AddPatientView {
         addLabeledFieldToGrid(formGrid, "Username:", new TextField(), 1);
         addLabeledFieldToGrid(formGrid, "Email:", new TextField(), 2);
         addLabeledFieldToGrid(formGrid, "Phone:", new TextField(), 3);
-        addLabeledFieldToGrid(formGrid, "License Number:", new TextField(), 4);
-        addLabeledFieldToGrid(formGrid, "Address:", new TextField(), 5);
-        addLabeledFieldToGrid(formGrid, "Birth Date:", new DatePicker(), 6);
-        addLabeledFieldToGrid(formGrid, "User Type:",
-                new ComboBox<>(FXCollections.observableArrayList(
-                        "PharmacyManager", "Pharmacist", "PharmacyTechnician", "Cashier", "Patient")),
-                7);
-
+          addLabeledFieldToGrid(formGrid, "Address:", new TextField(), 4);
+        addLabeledFieldToGrid(formGrid, "Birth Date:", new DatePicker(), 5);
         return formGrid;
     }
 
@@ -104,7 +95,6 @@ public class AddPatientView {
         label.setFont(Font.font("Arial", 16));
         label.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
-
         HBox fieldBox = new HBox(10); // 10px spacing
         fieldBox.setAlignment(Pos.CENTER_LEFT);
         fieldBox.getChildren().addAll(label, field);
@@ -118,25 +108,16 @@ public class AddPatientView {
             // Get values from the form
             String name = nameField.getText().trim();
             String username = usernameField.getText().trim();
-            String password = passwordField.getText().trim();
             String email = emailField.getText().trim();
             String phone = phoneField.getText().trim();
-            String licenseNumber = licenseField.getText().trim();
             String address = addressField.getText().trim();
             Date birthDate = birthDateChooser.getDate();
-            String userType = (String) userTypeCombo.getSelectionModel().getSelectedItem();
-
-            // Create the new person (you can use these values to create a new instance of your class)
-            System.out.println("Adding new person: " + name + ", " + username + ", " + email + ", " + userType);
-
-            // Here you can further process and save the user data as needed
-            // For example, create a new Person object or save to a database
         }
     }
 
     private static boolean validateFields() {
         // Check if any of the fields are empty
-        TextField[] fields = {nameField, usernameField, passwordField, emailField, phoneField, licenseField, addressField};
+        TextField[] fields = {nameField, usernameField, emailField, phoneField, addressField};
         for (TextField field : fields) {
             if (field.getText().trim().isEmpty()) {
                 return false;
