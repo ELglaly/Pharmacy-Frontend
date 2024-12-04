@@ -2,7 +2,6 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 
 public class InsuranceClaim extends Stage {
 
-    public static void createInsuranceClaimView() {
+    public static ScrollPane createInsuranceClaimView() {
         Stage stage = new Stage();
         stage.setTitle("Insurance Claim Submission");
 
@@ -151,11 +150,7 @@ public class InsuranceClaim extends Stage {
         scrollPane.setFitToWidth(true);
 
         // Set up the scene and stage
-        Scene scene = new Scene(scrollPane, 650, 500); // Adjusted height
-
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        return scrollPane;
     }
 
     private static void showAlert(Alert.AlertType alertType, String title, String message) {

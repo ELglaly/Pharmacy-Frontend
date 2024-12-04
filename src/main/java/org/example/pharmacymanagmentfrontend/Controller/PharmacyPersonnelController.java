@@ -1,6 +1,10 @@
 package org.example.pharmacymanagmentfrontend.Controller;
 
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+
+import javax.swing.*;
 
 public class PharmacyPersonnelController {
 
@@ -13,19 +17,24 @@ public class PharmacyPersonnelController {
 
     public static VBox addPatientView()
     {
-        VBox prescriptionView = org.example.pharmacymanagmentfrontend.View.PrescriptionView.createPrescriptionView();
+        VBox prescriptionView = org.example.pharmacymanagmentfrontend.View.AddPatientView.createAddPersonView();
         return prescriptionView;
     }
 
     public static VBox updatePatientView()
     {
-        VBox prescriptionView = org.example.pharmacymanagmentfrontend.View.PrescriptionView.createPrescriptionView();
-        return prescriptionView;
+        VBox updatePersonView = org.example.pharmacymanagmentfrontend.View.UpdatePatientView.createUpdatePersonView();
+        return updatePersonView;
     }
 
     public static VBox showPrescriptionHistroy()
     {
         VBox prescriptionView = org.example.pharmacymanagmentfrontend.View.PrescriptionView.createPrescriptionView();
         return prescriptionView;
+    }
+
+    public static Node showInsurancClaim() {
+        ScrollPane insuranceView = org.example.pharmacymanagmentfrontend.View.InsuranceClaim.createInsuranceClaimView();
+        return insuranceView;
     }
 }

@@ -21,12 +21,12 @@ import java.util.Date;
 
 public class AddPatientView {
 
-    private static TextField nameField;
-    private static TextField usernameField;
-    private static TextField emailField;
-    private static TextField phoneField;
-    private static TextField addressField;
-    private static SpinnerDateModel birthDateChooser;
+    private static TextField nameField=new TextField();
+    private static TextField usernameField=new TextField();
+    private static TextField emailField=new TextField();
+    private static TextField phoneField=new TextField();
+    private static TextField addressField=new TextField();
+    private static SpinnerDateModel birthDateChooser=new SpinnerDateModel();
     private static Button submitButton;
 
     public static VBox createAddPersonView() {

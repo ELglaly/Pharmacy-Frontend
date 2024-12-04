@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import org.example.pharmacymanagmentfrontend.Model.UserLogs;
 import org.example.pharmacymanagmentfrontend.View.ManagementDashboard;
+import org.example.pharmacymanagmentfrontend.View.PharmacyPersonnelDashboard;
 import org.example.pharmacymanagmentfrontend.View.PrescriptionView;
 
 import javax.swing.*;
@@ -55,7 +56,8 @@ public class ManagerController {
 //               case PharmacyManager: {
                     Stage stage =  (Stage)loginbutton.getScene().getWindow();
                     stage.close();
-                     PrescriptionView.createPrescriptionView();
+                    PharmacyPersonnelDashboard.createPharmacyPersonnelDashboard();
+                     //PrescriptionView.createPrescriptionView();
                  //    ManagementDashboard.createManagementDashboard();
                    // ManagementDashboard managementDashboard = new ManagementDashboard();
                    // managementDashboard.getUserLogs();
