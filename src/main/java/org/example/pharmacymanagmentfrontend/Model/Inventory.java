@@ -7,12 +7,22 @@ public class Inventory {
   private int quantity;
   private Boolean available;
   private Boolean lowStock;
+  private float price;
 
-  public Inventory(String name, int quantity) {
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public Inventory(String name, int quantity,float price) {
       this.name = name;
       this.quantity = quantity;
       this.available = quantity>0? true:false;
       this.lowStock = quantity<10? true: false;
+      this.price = price;
 
   }
     public String getName() {
