@@ -19,17 +19,13 @@ import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScen
 import java.util.HashMap;
 
 import static javafx.application.Application.launch;
-import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryStage;
 import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage;
 
 public class PrescriptionView {
 
     private static final HashMap<String, String> patientData = new HashMap<>();
 
-    public static void createPrescriptionView() {
-        Stage stage = new Stage();
-        stage.setTitle("Pharmacy Management System");
-
+    public static VBox createPrescriptionView() {
         // Header
         Label header = new Label("Pharmacy Management System");
         header.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: darkgreen;");
@@ -123,7 +119,6 @@ public class PrescriptionView {
                 dosageField.clear();
                 durationField.clear();
                 detailsArea.clear();
-                stage.close();
                 PatientController.CheckoutView(prescription);
             }
         });
@@ -167,9 +162,7 @@ public class PrescriptionView {
 
         VBox root = new VBox(header, content);
 
-        primaryScene = new Scene(root, 800, 600);
-        stage.setScene(primaryScene);
-        stage.show();
+        return root;
     }
 
     private static TextField createTextField(String promptText) {
