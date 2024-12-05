@@ -6,16 +6,18 @@ import java.util.List;
 public class Patient extends Person {
     private ArrayList<Prescription> prescriptionsPerson=new ArrayList<>();
     private String prescriptionString="";
+    private Boolean emptyPrescription=true;
     @Override
     public void setType() {
         this.Type=userTypes.Patient;
     }
 
-    public ArrayList<Prescription> getPrescriptions() {
-        return prescriptionsPerson;
+    public Boolean getPrescriptionsstatus() {
+        return emptyPrescription;
     }
 
     public void addPrescriptions(Prescription prescriptions) {
+        emptyPrescription=false;
         prescriptionsPerson.add(prescriptions);
         prescriptionString=getPrescriptionString();
     }

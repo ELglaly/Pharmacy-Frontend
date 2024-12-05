@@ -8,10 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.Controller.PatientController;
 import org.example.pharmacymanagmentfrontend.HelloApplication;
-import org.example.pharmacymanagmentfrontend.Model.Inventory;
-import org.example.pharmacymanagmentfrontend.Model.Patient;
-import org.example.pharmacymanagmentfrontend.Model.Prescription;
-import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
+import org.example.pharmacymanagmentfrontend.Model.*;
+
 import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
 import java.util.HashMap;
 
@@ -80,6 +78,19 @@ public class PrescriptionView {
                         alert.show();
                     }
                 }
+            if(!usernameField.getText().isEmpty())
+            {
+                Person patient=UserGenerator.checkUsername(String.valueOf(usernameField.getText()));
+                Patient patient1=(Patient)patient;
+                if(!patient1.getPrescriptionsstatus())
+                {
+                    Stage alert = alterMessage("attention:  potential drug interaction, \n" +
+                                    "allergy, or contraindication is detected based on the patient's medical history.",
+                            "Drug Interaction",
+                            "OK",null);
+                    alert.show();
+                }
+            }
                 nameField.setText( nameField.getText() +" - "+ selectedDrug);
         });
 
