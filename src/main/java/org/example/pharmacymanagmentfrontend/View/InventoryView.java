@@ -35,7 +35,7 @@ public class InventoryView extends Stage {
         searchField = new TextField();
         searchField.setPromptText("Search by Name");  // Set a prompt text
         searchButton = new Button("Search");
-         resetButton = new Button("Reset");
+        resetButton = new Button("Reset");
         // Create an HBox to hold the TextField and Buttons horizontally
         HBox headpanel = new HBox(10);  // 10px spacing between elements
         headpanel.setAlignment(Pos.CENTER_LEFT);  // Align elements to the left within the HBox

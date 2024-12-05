@@ -25,8 +25,6 @@ public class InsuranceInterface extends Stage {
         root.setVgap(15);
 
         root.setStyle("-fx-background-color: #f8f8f8;");
-
-
         // Style constants
         String sectionHeaderStyle = "-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #004080;";
         String labelStyle = "-fx-font-size: 12px; -fx-text-fill: #333333;";
