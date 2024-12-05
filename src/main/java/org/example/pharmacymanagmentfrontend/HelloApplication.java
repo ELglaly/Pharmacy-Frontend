@@ -24,6 +24,7 @@ public class HelloApplication extends Application {
     public static Scene primaryScene;
     public static Boolean loginpage=true;
     UserGenerator database;
+    public static int louckout=0;
 
 
     @Override

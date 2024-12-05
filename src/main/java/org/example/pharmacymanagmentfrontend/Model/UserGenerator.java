@@ -1,9 +1,13 @@
 package org.example.pharmacymanagmentfrontend.Model;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.HelloApplication;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.*;
+
+import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage;
 
 public class UserGenerator {
     private static List<PharmacyManager> pharmacyManagers = new ArrayList<>();
@@ -152,10 +156,19 @@ public class UserGenerator {
         Person person =checkUsername(username);
         if(person!=null)
         {
-               if(person.getPassword().equals(password)) {
+               if(person.getPassword().equals(password) && HelloApplication.louckout<5) {
+                   HelloApplication.louckout=0;
                 incrementAttemptedLogins(new Date(),person);
                 return person;
             }
+               else {
+                   if(HelloApplication.louckout>=5)
+                   {
+                       Stage stage=alterMessage( "More than 5 failed login attempts. Your account is now locked.","Account Locked","Ok",null);
+                       stage.show();
+                   }
+                   HelloApplication.louckout++;
+               }
         }
 
         // Check Pharmacists
