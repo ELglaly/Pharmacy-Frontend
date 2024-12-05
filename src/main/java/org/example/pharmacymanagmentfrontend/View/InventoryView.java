@@ -1,23 +1,14 @@
 package org.example.pharmacymanagmentfrontend.View;
 
-import javafx.animation.PauseTransition;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.Popup;
-import javafx.util.Duration;
 import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
-import org.example.pharmacymanagmentfrontend.Model.Inventory;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import javafx.stage.Stage;
-import javax.swing.text.View;
-
 import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage;
 
 //import static org.example.pharmacymanagmentfrontend.Model.UserGenerator.inventoryStock;
@@ -159,7 +150,6 @@ public class InventoryView extends Stage {
              alert.show();
          }
     }
-
 
 }
 

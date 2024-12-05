@@ -2,12 +2,7 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,7 +13,6 @@ import org.example.pharmacymanagmentfrontend.Model.Patient;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
-
 import java.util.HashMap;
 
 import static javafx.application.Application.launch;
@@ -65,9 +59,7 @@ public class PrescriptionView {
 
         ListView<String> drugList = new ListView<>();
         for(Inventory medicine: UserGenerator.inventoryStock)
-        drugList.getItems().addAll(
-                medicine.getName()
-        );
+            drugList.getItems().addAll(medicine.getName());
         drugList.setPrefHeight(380);
 
         ScrollPane scrollPane = new ScrollPane(drugList);
@@ -134,7 +126,6 @@ public class PrescriptionView {
 
         return root;
     }
-
 
 
     private static TextField createTextField(String promptText) {

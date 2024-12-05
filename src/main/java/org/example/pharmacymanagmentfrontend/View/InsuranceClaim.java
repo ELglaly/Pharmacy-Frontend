@@ -92,7 +92,7 @@ public class InsuranceClaim extends Stage {
         root.add(claimAmountField, 1, 12);
 
         Label claimDescriptionLabel = new Label("Description:");
-        TextArea claimDescriptionArea = new TextArea(prescription.toString());
+        TextArea claimDescriptionArea = new TextArea();
         claimDescriptionArea.setPromptText("Enter claim description");
         claimDescriptionArea.setPrefHeight(100);
         root.add(claimDescriptionLabel, 0, 13);
@@ -130,7 +130,7 @@ public class InsuranceClaim extends Stage {
         });
 
 
-        // Wrap in ScrollPane for scrollability
+        // Wrap in ScrollPane
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(root);
         scrollPane.setFitToWidth(true);

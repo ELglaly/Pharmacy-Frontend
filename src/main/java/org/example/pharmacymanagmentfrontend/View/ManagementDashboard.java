@@ -2,10 +2,8 @@ package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.*;

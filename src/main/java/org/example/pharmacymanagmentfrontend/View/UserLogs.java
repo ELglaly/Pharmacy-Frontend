@@ -20,7 +20,7 @@ public class UserLogs extends Stage {
 
 
 
-    // Top Sectio
+    // Top Section
     public static VBox AddUserLogsView() {
         VBox root = new VBox(20); // VBox with 20px spacing between elements
         root.setStyle("-fx-background-color: #f8f8f8; -fx-padding: 20px;");
@@ -58,7 +58,7 @@ public class UserLogs extends Stage {
         // Bottom Section: Display Total Logs
         VBox bottomPanel = new VBox(10);
         bottomPanel.setAlignment(Pos.CENTER);
-        //add total loga label
+        //add total log label
         Label totalLogsTextLabel = addTotalLogsLabel();
         bottomPanel.getChildren().addAll(totalLogsTextLabel, totalLogsLabel);
         root.getChildren().add(bottomPanel);

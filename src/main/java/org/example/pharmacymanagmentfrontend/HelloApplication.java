@@ -1,14 +1,14 @@
 package org.example.pharmacymanagmentfrontend;
 
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import org.example.pharmacymanagmentfrontend.Controller.ManagerController;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 
@@ -61,15 +61,13 @@ public class HelloApplication extends Application {
 
     private void handleTimeout() {
        if (!loginpage) {
-    Stage alterStage = alterMessage(
+            Stage alterStage = alterMessage(
             "Your session has timed out due to inactivity.\nPlease log in again to continue.",
             "Session Expired",
             "Log In",
-            () -> navigateToLoginPage() // Pass the navigation logic as a lambda
-    );
-
-    alterStage.show();
-}
+            () -> navigateToLoginPage()); // Pass the navigation logic as a lambda
+            alterStage.show();
+        }
 
         // Show the alert dialog
     }

@@ -153,41 +153,13 @@ public class UserGenerator {
         if(person!=null)
         {
                if(person.getPassword().equals(password)) {
-                System.out.println("Login successful as Pharmacy Manager.");
                 incrementAttemptedLogins(new Date(),person);
                 return person;
             }
         }
 
         // Check Pharmacists
-        for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getUsername().equalsIgnoreCase(username) && pharmacist.getPassword().equals(password)) {
-                System.out.println("Login successful as Pharmacist.");
-                incrementAttemptedLogins(new Date(),pharmacist);
-                return pharmacist;
-            }
-        }
 
-        // Check Pharmacy Technicians
-        for (PharmacyTechnician technician : pharmacyTechnicians) {
-            if (technician.getUsername().equalsIgnoreCase(username) && technician.getPassword().equals(password)) {
-                System.out.println("Login successful as Pharmacy Technician.");
-                incrementAttemptedLogins(new Date(),technician);
-                return technician;
-            }
-        }
-
-        // Check Cashiers
-        for (Cashier cashier : cashiers) {
-            if (cashier.getUsername().equalsIgnoreCase(username) && cashier.getPassword().equals(password)) {
-                System.out.println("Login successful as Cashier.");
-                incrementAttemptedLogins(new Date(),cashier);
-                return cashier;
-            }
-        }
-
-        // If no match found
-        System.out.println("Login failed. Invalid username or password.");
         incrementFailedAttempts(new Date(),username);
         return null;
     }
@@ -204,8 +176,24 @@ public class UserGenerator {
             }
         }
 
+        // Check Pharmacy Technicians
+        for (PharmacyTechnician technician : pharmacyTechnicians) {
+            if (technician.getUsername().equalsIgnoreCase(username)) {
+                incrementAttemptedLogins(new Date(),technician);
+                return technician;
+            }
+        }
+
+        // Check Cashiers
+        for (Cashier cashier : cashiers) {
+            if (cashier.getUsername().equalsIgnoreCase(username) ) {
+                incrementAttemptedLogins(new Date(),cashier);
+                return cashier;
+            }
+        }
         for (Patient patient : patients) {
-            if (patient.getUsername().equalsIgnoreCase(username)) {
+            if (patient.getUsername().equalsIgnoreCase(username) ) {
+                incrementAttemptedLogins(new Date(),patient);
                 return patient;
             }
         }

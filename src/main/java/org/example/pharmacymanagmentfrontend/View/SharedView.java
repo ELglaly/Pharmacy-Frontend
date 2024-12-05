@@ -1,6 +1,7 @@
 package org.example.pharmacymanagmentfrontend.View;
 
 
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,8 +16,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.function.Function;
-
 import static org.example.pharmacymanagmentfrontend.HelloApplication.*;
 
 
@@ -30,7 +29,7 @@ public class SharedView extends javax.swing.JFrame {
         dialogStage.initStyle(StageStyle.UTILITY); // Minimal window style
         dialogStage.setTitle(title);
 
-        dialogStage.setOnCloseRequest(event -> event.consume());
+        dialogStage.setOnCloseRequest(Event::consume);
         // Create the content of the dialog
         VBox content = new VBox(10);
         content.setAlignment(Pos.CENTER);
@@ -66,8 +65,7 @@ public class SharedView extends javax.swing.JFrame {
 
         // Set the Scene and show the dialog
         primaryScene = new Scene(content);
-        primaryScene.setOnMouseMoved(event -> resetTimer());
-        primaryScene.setOnKeyPressed(event -> resetTimer());
+        PharmacyPersonnelDashboard.addTimeUp();
         dialogStage.setScene(primaryScene);
         dialogStage.centerOnScreen();
         return dialogStage;

@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.Model.Brush;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
-
-import java.text.BreakIterator;
 import java.util.Map;
 
 import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
@@ -217,7 +215,6 @@ public class CheckoutView {
     }
 
     private static VBox showSignatureScreen() {
-
         Label signatureLabel = new Label("Signature Confirmation");
         signatureLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
