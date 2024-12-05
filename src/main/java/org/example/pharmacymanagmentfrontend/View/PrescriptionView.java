@@ -6,10 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.Controller.PatientController;
+import org.example.pharmacymanagmentfrontend.HelloApplication;
 import org.example.pharmacymanagmentfrontend.Model.Inventory;
 import org.example.pharmacymanagmentfrontend.Model.Patient;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
@@ -131,6 +134,8 @@ public class PrescriptionView {
 
         return root;
     }
+
+
 
     private static TextField createTextField(String promptText) {
         TextField textField = new TextField();

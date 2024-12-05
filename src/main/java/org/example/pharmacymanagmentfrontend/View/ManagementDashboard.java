@@ -38,8 +38,7 @@ public class ManagementDashboard extends JFrame {
         root = new BorderPane();
         // Set up the Scene and Stage
          primaryScene = new Scene(root, 900, 600);
-        primaryScene.setOnMouseMoved(event -> resetTimer());
-        primaryScene.setOnKeyPressed(event -> resetTimer());
+        PharmacyPersonnelDashboard.addTimeUp();
         primaryStage.setTitle("Management Dashboard");
         primaryStage.setScene(primaryScene);
         primaryStage.show();

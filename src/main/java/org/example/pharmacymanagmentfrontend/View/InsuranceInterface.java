@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 
 public class InsuranceInterface extends Stage {
 
@@ -132,6 +133,7 @@ public class InsuranceInterface extends Stage {
         ScrollPane scrollPane = new ScrollPane(root);
         scrollPane.setFitToWidth(true);
 
+        PharmacyPersonnelController.resetTimeUp(scrollPane);
 
         return scrollPane;
 

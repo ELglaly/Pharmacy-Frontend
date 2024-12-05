@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.Model.Person;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 
@@ -84,7 +85,7 @@ public class UpdatePatientView {
         HBox buttonContainer = new HBox(submitButton);
         buttonContainer.setAlignment(Pos.CENTER);
         root.getChildren().add(buttonContainer);
-
+        PharmacyPersonnelController.resetTimeUp(root);
         return root;
     }
 

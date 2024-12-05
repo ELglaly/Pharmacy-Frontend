@@ -131,7 +131,8 @@ public class CheckoutView {
 
         VBox leftColumn = new VBox(20, titleLabel, customerInfo, itemsTable, promocodeSection);
         VBox rightColumn = new VBox(20, showSignatureScreen() ,addPaymentMethodsUI(prescription), buttonBox);
-
+        PharmacyPersonnelController.resetTimeUp(leftColumn);
+        PharmacyPersonnelController.resetTimeUp(rightColumn);
         mainLayout.getChildren().addAll(leftColumn, rightColumn);
 
         // Adjust layout for smaller screens (Stack vertically on smaller screens)
@@ -142,6 +143,7 @@ public class CheckoutView {
 
         // Scene and Stage
         primaryScene = new Scene(mainLayout, 700, 600);
+        PharmacyPersonnelController.resetTimeUp(mainLayout);
         stage.setTitle("Checkout View");
         stage.setScene(primaryScene);
         stage.show();
@@ -175,7 +177,7 @@ public class CheckoutView {
         // Style
         itemsTable.setStyle("-fx-font-size: 14px; -fx-background-color: #ffffff;");
         itemsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+        PharmacyPersonnelController.resetTimeUp(itemsTable);
         return itemsTable;
     }
 
@@ -210,6 +212,7 @@ public class CheckoutView {
         VBox layout = new VBox(10, promoCodeField, applyButton, promoFeedback);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(15));
+        PharmacyPersonnelController.resetTimeUp(layout);
         return layout;
     }
 
@@ -226,7 +229,7 @@ public class CheckoutView {
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
         layout.setStyle("-fx-background-color: #f3e5f5;");
-
+        PharmacyPersonnelController.resetTimeUp(layout);
         return layout;
     }
 
@@ -247,6 +250,7 @@ public class CheckoutView {
                 }
             }
         });
+        PharmacyPersonnelController.resetTimeUp(pane);
         return pane;
     }
 
@@ -290,6 +294,7 @@ public class CheckoutView {
         });
 
         paymentLayout.getChildren().addAll(paymentLabel, paymentMethods, paymentDetailsBox);
+        PharmacyPersonnelController.resetTimeUp(paymentLayout);
         return paymentLayout;
     }
 }

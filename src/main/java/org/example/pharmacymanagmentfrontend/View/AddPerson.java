@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 
 import java.util.Date;
 
@@ -83,7 +84,7 @@ public class AddPerson extends JFrame {
                 new ComboBox<>(FXCollections.observableArrayList(
                         "PharmacyManager", "Pharmacist", "PharmacyTechnician", "Cashier", "Patient")),
                 7);
-
+        PharmacyPersonnelController.resetTimeUp(formGrid);
         return formGrid;
     }
 

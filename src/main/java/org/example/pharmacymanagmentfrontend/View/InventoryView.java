@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.Model.Inventory;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import javafx.stage.Stage;
@@ -116,7 +117,8 @@ public class InventoryView extends Stage {
         ScrollPane tableScrollPane = new ScrollPane();
         tableScrollPane.setContent(stocksTable); // Set the TableView as the content of the ScrollPane
         tableScrollPane.setFitToHeight(true);  // Make the ScrollPane fit the height of the content
-        tableScrollPane.setFitToWidth(true);   // Make the ScrollPane fit the width of the content
+        tableScrollPane.setFitToWidth(true);
+        PharmacyPersonnelController.resetTimeUp(stocksTable);// Make the ScrollPane fit the width of the content
         return stocksTable;
     }
 

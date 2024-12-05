@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 
 import java.util.Date;
 
@@ -58,7 +59,7 @@ public class AddPatientView {
         buttonContainer.setAlignment(Pos.CENTER); // Center the button inside the HBox
 
         root.getChildren().add(buttonContainer);
-
+        PharmacyPersonnelController.resetTimeUp(root);
         return root;
     }
 
