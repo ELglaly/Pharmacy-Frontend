@@ -28,11 +28,9 @@ public class AddPatientView {
         Label headerText = new Label("Add Patient");
         headerText.setFont(Font.font("Arial", 28));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
-        headerText.setUnderline(true);
         HBox headerTextContainer = new HBox(headerText);
         headerTextContainer.setAlignment(Pos.CENTER);
         root.getChildren().add(headerTextContainer);
-
         root.getChildren().add(createForm());
 
         Button submitButton = ManagementDashboard.createStyledButton("Add Patient", "#2ecc71", "#27ae60");
@@ -47,7 +45,6 @@ public class AddPatientView {
         HBox buttonContainer = new HBox(submitButton);
         buttonContainer.setAlignment(Pos.CENTER);
         root.getChildren().add(buttonContainer);
-
         PharmacyPersonnelController.resetTimeUp(root);
         return root;
     }

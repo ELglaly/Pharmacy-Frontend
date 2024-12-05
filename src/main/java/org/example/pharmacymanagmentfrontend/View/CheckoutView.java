@@ -43,26 +43,7 @@ public class CheckoutView {
         titleLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;");
 
         // Customer Info Section
-        GridPane customerInfo = new GridPane();
-        customerInfo.setHgap(10);
-        customerInfo.setVgap(10);
-        customerInfo.setAlignment(Pos.CENTER);
-        customerInfo.setPadding(new Insets(15));
-
-        Label nameLabel = new Label("Customer Name:");
-        nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        Label nameValue = new Label(prescription.getPatient().getName());
-        nameValue.setStyle("-fx-font-size: 16px;");
-
-        Label totalLabel = new Label("Total Cost:");
-        totalLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        Label totalValue = new Label(String.format("$%.2f", prescription.getTotalPrice()));
-        totalValue.setStyle("-fx-font-size: 16px;");
-
-        customerInfo.add(nameLabel, 0, 0);
-        customerInfo.add(nameValue, 1, 0);
-        customerInfo.add(totalLabel, 0, 1);
-        customerInfo.add(totalValue, 1, 1);
+        GridPane customerInfo = creadCustomerInfoGridPane(prescription);
 
         // Items Table
         TableView<Map.Entry<String, Map<Integer, Float>>> itemsTable = createItemsTable(prescription);
@@ -80,43 +61,7 @@ public class CheckoutView {
         buttonBox.setAlignment(Pos.CENTER);
 
         confirmButton.setOnAction(e -> {
-            String signature = signatureField.getText().trim();
-            if (!(!signature.isEmpty() || group.getChildren().stream().anyMatch(node -> node instanceof Circle))) {
-                System.out.println(group.getChildren().stream().anyMatch(node -> node instanceof Circle));
-                Stage alert = alterMessage("Please Add Signature.",
-                        "Signature",
-                        "OK",null);
-                alert.show();
-            }
-            else if (paymentMethods.getValue() == null) {
-                Stage alert = alterMessage("Please add Payment Method.",
-                        "Payment Method",
-                        "OK",null);
-                alert.show();
-            }
-            else if(paymentMethods.getValue().equalsIgnoreCase("Credit Card") || paymentMethods.getValue().equalsIgnoreCase("Debit Card") )
-            {
-                if(cardNumberField.getText().isEmpty() || cvvField.getText().isEmpty() || expiryField.getText().isEmpty())
-                {
-                    Stage alert = alterMessage("Please add Card Details.",
-                            "Payment Method",
-                            "OK",null);
-                    alert.show();
-                }
-                else {
-                    Stage alert = alterMessage(
-                            "Checkout completed successfully!\nThank you for your purchase.",
-                            "Success",
-                            "OK",null
-                    );
-                    alert.show();
-                    stage.close();
-                }
-            }
-            else if(paymentMethods.getValue().equalsIgnoreCase("insurance"))
-            {
-                PharmacyPersonnelController.showInsurancClaim(prescription);
-            }
+          ValidateDataEntered(stage,prescription);
         });
 
         cancelButton.setOnAction(event -> stage.close());
@@ -146,6 +91,71 @@ public class CheckoutView {
         stage.setScene(primaryScene);
         stage.show();
     }
+
+    private static GridPane creadCustomerInfoGridPane(Prescription prescription) {
+        GridPane customerInfo = new GridPane();
+        customerInfo.setHgap(10);
+        customerInfo.setVgap(10);
+        customerInfo.setAlignment(Pos.CENTER);
+        customerInfo.setPadding(new Insets(15));
+
+        Label nameLabel = new Label("Customer Name:");
+        nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        Label nameValue = new Label(prescription.getPatient().getName());
+        nameValue.setStyle("-fx-font-size: 16px;");
+
+        Label totalLabel = new Label("Total Cost:");
+        totalLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        Label totalValue = new Label(String.format("$%.2f", prescription.getTotalPrice()));
+        totalValue.setStyle("-fx-font-size: 16px;");
+
+        customerInfo.add(nameLabel, 0, 0);
+        customerInfo.add(nameValue, 1, 0);
+        customerInfo.add(totalLabel, 0, 1);
+        customerInfo.add(totalValue, 1, 1);
+        return customerInfo;
+    }
+
+    private static void ValidateDataEntered(Stage stage, Prescription prescription) {
+        String signature = signatureField.getText().trim();
+        if (!(!signature.isEmpty() || group.getChildren().stream().anyMatch(node -> node instanceof Circle))) {
+            System.out.println(group.getChildren().stream().anyMatch(node -> node instanceof Circle));
+            Stage alert = alterMessage("Please Add Signature.",
+                    "Signature",
+                    "OK",null);
+            alert.show();
+        }
+        else if (paymentMethods.getValue() == null) {
+            Stage alert = alterMessage("Please add Payment Method.",
+                    "Payment Method",
+                    "OK",null);
+            alert.show();
+        }
+        else if(paymentMethods.getValue().equalsIgnoreCase("Credit Card") || paymentMethods.getValue().equalsIgnoreCase("Debit Card") )
+        {
+            if(cardNumberField.getText().isEmpty() || cvvField.getText().isEmpty() || expiryField.getText().isEmpty())
+            {
+                Stage alert = alterMessage("Please add Card Details.",
+                        "Payment Method",
+                        "OK",null);
+                alert.show();
+            }
+            else {
+                Stage alert = alterMessage(
+                        "Checkout completed successfully!\nThank you for your purchase.",
+                        "Success",
+                        "OK",null
+                );
+                alert.show();
+                stage.close();
+            }
+        }
+        else if(paymentMethods.getValue().equalsIgnoreCase("insurance"))
+        {
+            PharmacyPersonnelController.showInsurancClaim(prescription);
+        }
+    }
+
 
     private static TableView<Map.Entry<String, Map<Integer, Float>>> createItemsTable(Prescription prescription) {
         TableView<Map.Entry<String, Map<Integer, Float>>> itemsTable = new TableView<>();

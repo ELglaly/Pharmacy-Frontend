@@ -35,7 +35,6 @@ public class AddPerson {
         Label headerText = new Label("Add Person");
         headerText.setFont(Font.font(28));
         headerText.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
-        headerText.setUnderline(true);
         HBox headerTextContainer = new HBox(headerText);
         headerTextContainer.setAlignment(Pos.CENTER);
         root.getChildren().add(headerTextContainer);
@@ -65,7 +64,6 @@ public class AddPerson {
         formGrid.setHgap(10);
         formGrid.setVgap(15);
         formGrid.setAlignment(Pos.CENTER_LEFT);
-
         // Initialize form fields
         nameField = new TextField();
         usernameField = new TextField();
@@ -78,7 +76,6 @@ public class AddPerson {
         userTypeCombo = new ComboBox<>(FXCollections.observableArrayList(
                 "PharmacyManager", "Pharmacist", "PharmacyTechnician", "Cashier", "Patient"
         ));
-
         // Add labeled fields to the grid
         addLabeledFieldToGrid(formGrid, "Name:", nameField, 0);
         addLabeledFieldToGrid(formGrid, "Username:", usernameField, 1);
@@ -91,7 +88,6 @@ public class AddPerson {
         addLabeledFieldToGrid(formGrid, "User Type:", userTypeCombo, 8);
 
         PharmacyPersonnelController.resetTimeUp(formGrid); // Additional logic for timing
-
         return formGrid;
     }
 
