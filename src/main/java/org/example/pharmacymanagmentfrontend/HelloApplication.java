@@ -18,7 +18,7 @@ import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage
 
 public class HelloApplication extends Application {
 
-    private static final double TIMEOUT_SECONDS = .05 * 60; // 1 minutes
+    private static final double TIMEOUT_SECONDS = 15 * 60; // 1 minutes
     public static Timeline inactivityTimer;
     public static Stage primaryStage;
     public static Scene primaryScene;
