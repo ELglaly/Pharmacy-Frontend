@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.HelloApplication;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import org.example.pharmacymanagmentfrontend.Model.UserLogs;
 import org.example.pharmacymanagmentfrontend.View.ManagementDashboard;
@@ -35,6 +36,14 @@ public class ManagerController {
     Label loginerrormessage;
     @FXML
     Button loginbutton;
+
+    public Boolean  getbuton()
+    {
+        //Stage stage =  (Stage).getWindow();
+        if(loginbutton.getScene()==null)
+          return true;
+        else return false;
+    }
   //  private Stage stage1;
   //  private Scene scene;
     private Parent root;
@@ -42,6 +51,7 @@ public class ManagerController {
     public static VBox updatePersonView() {
         VBox AddpersonPanel = new VBox(10);
         AddpersonPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.UpdatePerson.createUpdatePersonView());
+        PharmacyPersonnelController.resetTimeUp(AddpersonPanel);
         return AddpersonPanel;
     }
 
@@ -51,6 +61,9 @@ public class ManagerController {
 //        String password = passwordlogin.getText();
 //        Person user =UserGenerator.login(username,password);
 //        if(user!=null){
+           HelloApplication.loginpage=false;
+          //  HelloApplication start = new HelloApplication();
+          //   start.setupInactivityTimer();
 //           switch (user.getType())
 //           {
 //               case PharmacyManager: {
@@ -58,7 +71,7 @@ public class ManagerController {
                     stage.close();
                     PharmacyPersonnelDashboard.createPharmacyPersonnelDashboard();
                      //PrescriptionView.createPrescriptionView();
-                 //    ManagementDashboard.createManagementDashboard();
+                    // ManagementDashboard.createManagementDashboard();
                    // ManagementDashboard managementDashboard = new ManagementDashboard();
                    // managementDashboard.getUserLogs();
 
@@ -89,7 +102,7 @@ public class ManagerController {
         // Extract the content pane of the UserLogs frame
         VBox userLogsPanel = new VBox(10);
         userLogsPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.UserLogs.AddUserLogsView());
-
+        PharmacyPersonnelController.resetTimeUp(userLogsPanel);
         return userLogsPanel;
     }
 
@@ -98,7 +111,7 @@ public class ManagerController {
 
         VBox AddpersonPanel = new VBox(10);
         AddpersonPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.AddPerson.createAddPersonView());
-
+        PharmacyPersonnelController.resetTimeUp(AddpersonPanel);
         return AddpersonPanel;
     }
 
@@ -107,70 +120,8 @@ public class ManagerController {
 
         VBox InventoryViewPanel = new VBox(10);
         InventoryViewPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.InventoryView.createInventoryView());
-
+        PharmacyPersonnelController.resetTimeUp(InventoryViewPanel);
         return InventoryViewPanel;
-    }
-
-
-
-    @FXML
-    private TextField searchField;
-    @FXML
-    private Button searchButton;
-    @FXML
-    private Button resetButton;
-    @FXML
-    private TableView<UserLogs> logsTable;
-    @FXML
-    private TableColumn<UserLogs, Date> loginTimeColumn;
-    @FXML
-    private TableColumn<UserLogs, Boolean> successfulLoginColumn;
-    @FXML
-    private TableColumn<UserLogs, String> usernameColumn;
-    @FXML
-    private TableColumn<UserLogs, String> userTypeColumn;
-    @FXML
-    private Label totalLogsLabel;
-    @FXML
-    private ObservableList<UserLogs> userLogsData = FXCollections.observableArrayList();
-
-    public void displayUserLogs()
-    {
-        for(UserLogs userLogs: UserGenerator.getLoginTracker())
-        {
-            userLogsData.add(userLogs);
-
-        }
-        logsTable.setItems(userLogsData);
-        updateTotalLogs();
-    }
-    private void updateTotalLogs() {
-        totalLogsLabel.setText(String.valueOf(logsTable.getItems().size()));
-    }
-
-    private void resetLogs() {
-        searchField.clear();
-        logsTable.setItems(userLogsData); // Reset to all data
-        updateTotalLogs();
-    }
-
-    private void searchLogs() {
-        String searchText = searchField.getText().trim().toLowerCase();
-
-        if (searchText.isEmpty()) {
-            logsTable.setItems(userLogsData); // Reset to all data
-        } else {
-            ObservableList<UserLogs> filteredLogs = FXCollections.observableArrayList();
-            for (UserLogs log : userLogsData) {
-                if (log.getUsername().toLowerCase().contains(searchText)) {
-                    filteredLogs.add(log);
-                }
-            }
-            logsTable.setItems(filteredLogs);
-        }
-
-        // Update the total logs label after filtering
-        updateTotalLogs();
     }
 
 

@@ -36,8 +36,7 @@ public class PharmacyPersonnelDashboard {
         root = new BorderPane();
         // Set up the Scene and Stage
         primaryScene = new Scene(root, 900, 600);
-        primaryScene.setOnMouseMoved(event -> resetTimer());
-        primaryScene.setOnKeyPressed(event -> resetTimer());
+        addTimeUp();
         primaryStage.setTitle("Pharmacy Personnel Dashboard");
         primaryStage.setScene(primaryScene);
         primaryStage.show();
@@ -47,7 +46,13 @@ public class PharmacyPersonnelDashboard {
         root.setLeft(leftPanel);
         //set the result for the button
         root.setCenter(PharmacyPersonnelController.showPrescriptionHistroy());
+        addTimeUp();
         return primaryScene;
+    }
+
+    public static void addTimeUp() {
+        primaryScene.setOnMouseMoved(event -> resetTimer());
+        primaryScene.setOnKeyPressed(event -> resetTimer());
     }
 
     // Create left navigation panel (buttons for switching between screens)

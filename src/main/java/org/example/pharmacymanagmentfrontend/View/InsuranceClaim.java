@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
 
 import java.time.LocalDate;
@@ -134,7 +135,7 @@ public class InsuranceClaim extends Stage {
         scrollPane.setContent(root);
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("fx-background-color: #f8f8f8;");
-
+        PharmacyPersonnelController.resetTimeUp(scrollPane);
         // Set up the scene and stage
         return scrollPane;
     }

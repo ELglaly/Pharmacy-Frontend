@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.example.pharmacymanagmentfrontend.Controller.PharmacyPersonnelController;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 
 public class UserLogs extends Stage {
@@ -107,6 +108,7 @@ public class UserLogs extends Stage {
         tableScrollPane.setContent(logsTable); // Set the TableView as the content of the ScrollPane
         tableScrollPane.setFitToHeight(true);  // Make the ScrollPane fit the height of the content
         tableScrollPane.setFitToWidth(true);   // Make the ScrollPane fit the width of the content
+        PharmacyPersonnelController.resetTimeUp(logsTable);
         return logsTable;
     }
 
