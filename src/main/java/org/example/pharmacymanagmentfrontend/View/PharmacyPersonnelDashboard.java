@@ -1,4 +1,4 @@
-
+// PharmacyPersonnelDashboard.java
 package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Pos;
@@ -13,90 +13,77 @@ import org.example.pharmacymanagmentfrontend.Model.Patient;
 import org.example.pharmacymanagmentfrontend.Model.Prescription;
 
 import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
-
 import static org.example.pharmacymanagmentfrontend.HelloApplication.resetTimer;
 import static org.example.pharmacymanagmentfrontend.View.ManagementDashboard.createStyledButton;
 
 public class PharmacyPersonnelDashboard {
-    
-    private static javafx.scene.control.Button addPatientButton;
-    private static javafx.scene.control.Button UpdatePatientButton;
-    private static javafx.scene.control.Button UpdatePresceiptionButton;
-    private static javafx.scene.control.Button showhistoryButton;
-    private static javafx.scene.control.Button insuranceClaimButton;
-    private static javafx.scene.control.Button insuranceinterfaceButton;
-    private static Stage primaryStage;
-    private  static BorderPane root;
 
-    public static Scene createPharmacyPersonnelDashboard() {
+    private static BorderPane root;
 
-        primaryStage = new Stage();
-        HelloApplication.primaryStage = primaryStage;
-        // Left Navigation Panel
+    // Create the main dashboard for pharmacy personnel
+    public static void createPharmacyPersonnelDashboard() {
+        Stage primaryStage = setupPrimaryStage();
         root = new BorderPane();
-        // Set up the Scene and Stage
         primaryScene = new Scene(root, 900, 600);
         addTimeUp();
         primaryStage.setTitle("Pharmacy Personnel Dashboard");
         primaryStage.setScene(primaryScene);
         primaryStage.show();
-        // Left Panel in JavaFX (VBox layout)
         VBox leftPanel = createLeftPanel();
-        // Add the left panel to the root layout
         root.setLeft(leftPanel);
-        //set the result for the button
-        root.setCenter(PharmacyPersonnelController.showPrescriptionHistroy());
+        root.setCenter(PharmacyPersonnelController.showPrescriptionHistory());
         addTimeUp();
-        return primaryScene;
     }
 
+    // Setup the primary stage
+    private static Stage setupPrimaryStage() {
+        Stage primaryStage = new Stage();
+        HelloApplication.primaryStage = primaryStage;
+        return primaryStage;
+    }
+
+    // Add time-up event handlers
     public static void addTimeUp() {
         primaryScene.setOnMouseMoved(event -> resetTimer());
         primaryScene.setOnKeyPressed(event -> resetTimer());
     }
 
-    // Create left navigation panel (buttons for switching between screens)
+    // Create the left navigation panel
     private static VBox createLeftPanel() {
-        VBox leftPanel = new VBox(20);  // Reduced spacing to make buttons closer
-        leftPanel.setStyle("-fx-background-color: #f1f1f1; -fx-pref-width: 200; -fx-padding: 20;");  // Lighter background with padding
-
-        // Buttons with hover effect and styling
-        UpdatePresceiptionButton = createStyledButton("Add Prescription","#f9bf29","#ff9933");
-        addPatientButton = createStyledButton("Add Patient","#f9bf29","#ff9933");
-        UpdatePatientButton = createStyledButton("Update Patient","#f9bf29","#ff9933");
-        showhistoryButton=createStyledButton("Show history", "#f9bf29", "#ff9933");
-        insuranceClaimButton=createStyledButton("Insurance Claim", "#f9bf29", "#ff9933");
-        insuranceinterfaceButton=createStyledButton("Insurance", "#f9bf29", "#ff9933");
-
-        UpdatePresceiptionButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.addPrescriptionView());
-        });
-
-        addPatientButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.addPatientView());
-        });
-
-        UpdatePatientButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.updatePatientView());
-        });
-        showhistoryButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.showPatientHistroyVIew());
-        });
-        insuranceClaimButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            Patient patient=new Patient();
-            root.setCenter(PharmacyPersonnelController.showInsurancClaim(new Prescription(patient,"","","","")));
-        });
-        insuranceinterfaceButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            root.setCenter(PharmacyPersonnelController.showInsuranceInterface());
-        });
-
-
-        // Add buttons to the panel
-        leftPanel.getChildren().addAll(UpdatePresceiptionButton, addPatientButton,insuranceClaimButton,insuranceinterfaceButton, UpdatePatientButton,showhistoryButton);
-
-        // Make sure buttons are centered
+        VBox leftPanel = new VBox(20);
+        leftPanel.setStyle("-fx-background-color: #f1f1f1; -fx-pref-width: 200; -fx-padding: 20;");
+        addButtonsToPanel(leftPanel);
         leftPanel.setAlignment(Pos.CENTER);
-
         return leftPanel;
+    }
+
+    // Add buttons to the left panel
+    private static void addButtonsToPanel(VBox leftPanel) {
+        javafx.scene.control.Button updatePresceiptionButton = createStyledButton("Add Prescription", "#f9bf29", "#ff9933");
+        javafx.scene.control.Button addPatientButton = createStyledButton("Add Patient", "#f9bf29", "#ff9933");
+        javafx.scene.control.Button updatePatientButton = createStyledButton("Update Patient", "#f9bf29", "#ff9933");
+        javafx.scene.control.Button showhistoryButton = createStyledButton("Show history", "#f9bf29", "#ff9933");
+        javafx.scene.control.Button insuranceClaimButton = createStyledButton("Insurance Claim", "#f9bf29", "#ff9933");
+        javafx.scene.control.Button insuranceinterfaceButton = createStyledButton("Insurance", "#f9bf29", "#ff9933");
+
+        addEventHandlers(updatePresceiptionButton, addPatientButton, updatePatientButton, showhistoryButton, insuranceClaimButton, insuranceinterfaceButton);
+
+        leftPanel.getChildren().addAll(updatePresceiptionButton, addPatientButton, insuranceClaimButton, insuranceinterfaceButton, updatePatientButton, showhistoryButton);
+    }
+
+    // Add event handlers to buttons
+    private static void addEventHandlers(javafx.scene.control.Button updatePresceiptionButton, javafx.scene.control.Button addPatientButton, javafx.scene.control.Button updatePatientButton, javafx.scene.control.Button showhistoryButton, javafx.scene.control.Button insuranceClaimButton, javafx.scene.control.Button insuranceinterfaceButton) {
+        updatePresceiptionButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> root.setCenter(PharmacyPersonnelController.addPrescriptionView()));
+        addPatientButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> root.setCenter(PharmacyPersonnelController.addPatientView()));
+        updatePatientButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> root.setCenter(PharmacyPersonnelController.updatePatientView()));
+        showhistoryButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> root.setCenter(PharmacyPersonnelController.showPrescriptionHistory()));
+        insuranceClaimButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            root.setCenter(PharmacyPersonnelController.showInsuranceClaim(new Prescription
+                    .Builder().setPatient(
+                            new Patient.Builder().build()
+                    )
+                    .build()));
+        });
+        insuranceinterfaceButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> root.setCenter(PharmacyPersonnelController.showInsuranceInterface()));
     }
 }

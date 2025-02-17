@@ -1,5 +1,5 @@
+// SharedView.java
 package org.example.pharmacymanagmentfrontend.View;
-
 
 import javafx.event.Event;
 import javafx.geometry.Insets;
@@ -16,58 +16,85 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import static org.example.pharmacymanagmentfrontend.HelloApplication.*;
-
+import static org.example.pharmacymanagmentfrontend.HelloApplication.inactivityTimer;
+import static org.example.pharmacymanagmentfrontend.HelloApplication.primaryScene;
+import static org.example.pharmacymanagmentfrontend.View.ManagementDashboard.createStyledButton;
+import static org.example.pharmacymanagmentfrontend.View.PharmacyPersonnelDashboard.addTimeUp;
 
 public class SharedView extends javax.swing.JFrame {
 
-    public static Stage alterMessage(String message, String title, String buttonText, Runnable function)
-    {
+    // Create and display an alert message dialog
+    public static Stage alterMessage(String message, String title, String buttonText, Runnable function) {
         inactivityTimer.stop();
+        Stage dialogStage = createDialogStage(title);
+        VBox content = createDialogContent(message, title, buttonText, function, dialogStage);
+        setupAndShowDialog(dialogStage, content);
+        return dialogStage;
+    }
+
+    // Create and configure the dialog stage
+    private static Stage createDialogStage(String title) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
         dialogStage.initStyle(StageStyle.UTILITY); // Minimal window style
         dialogStage.setTitle(title);
+        dialogStage.setOnCloseRequest(Event::consume); // Prevent closing the dialog
+        return dialogStage;
+    }
 
-        dialogStage.setOnCloseRequest(Event::consume);
-        // Create the content of the dialog
+    // Create and configure the dialog content
+    private static VBox createDialogContent(String message, String title, String buttonText, Runnable function, Stage dialogStage) {
         VBox content = new VBox(10);
         content.setAlignment(Pos.CENTER);
         content.setPadding(new Insets(20));
+        Label titleLabel = createTitleLabel(title);
+        Label messageLabel = createMessageLabel(message);
+        Button okButton = createOkButton(buttonText, function, dialogStage);
+        content.getChildren().addAll(titleLabel, messageLabel, okButton);
+        return content;
+    }
 
-        // Add a title label
+    // Create and configure the title label
+    private static Label createTitleLabel(String title) {
         Label titleLabel = new Label(title);
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         titleLabel.setTextFill(Color.DARKRED);
+        return titleLabel;
+    }
 
-        // Add a message label
+    // Create and configure the message label
+    private static Label createMessageLabel(String message) {
         Label messageLabel = new Label(message);
         messageLabel.setFont(Font.font("Arial", 14));
         messageLabel.setTextFill(Color.DARKGRAY);
         messageLabel.setWrapText(true);
         messageLabel.setTextAlignment(TextAlignment.CENTER);
+        return messageLabel;
+    }
 
-        // Add an "OK" button
-        Button okButton = ManagementDashboard.createStyledButton(buttonText,"#27ae60","#27ae60");
-        okButton.setOnAction(event -> {
+    // Create and configure the OK button
+    private static Button createOkButton(String buttonText, Runnable function, Stage dialogStage) {
+        Button okButton = createStyledButton(buttonText, "#27ae60", "#27ae60");
+        okButton.setOnAction(event -> handleOkButtonClick(function, dialogStage));
+        return okButton;
+    }
+
+    // Handle the OK button click event
+    private static void handleOkButtonClick(Runnable function, Stage dialogStage) {
+        dialogStage.close();
+        if (function != null) {
+            inactivityTimer.stop();
+            function.run();
             dialogStage.close();
-            if(function!=null)// Close the dialog
-            {
-                inactivityTimer.stop();
-                function.run();
-                dialogStage.close();
+        }
+    }
 
-            }
-        });
-
-        // Assemble the content
-        content.getChildren().addAll( titleLabel, messageLabel, okButton);
-
-        // Set the Scene and show the dialog
+    // Setup and show the dialog
+    private static void setupAndShowDialog(Stage dialogStage, VBox content) {
         primaryScene = new Scene(content);
-        PharmacyPersonnelDashboard.addTimeUp();
+        addTimeUp();
         dialogStage.setScene(primaryScene);
         dialogStage.centerOnScreen();
-        return dialogStage;
+        dialogStage.show();
     }
 }

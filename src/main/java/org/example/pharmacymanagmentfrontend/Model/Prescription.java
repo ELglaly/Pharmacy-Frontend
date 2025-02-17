@@ -16,7 +16,7 @@ public class Prescription {
     private Map<String, Map<Integer, Float>> drugAndQuantity;
 
     // Private constructor to initialize Prescription object using Builder
-    private Prescription(Builder builder) {
+    public Prescription(Builder builder) {
         this.patient = builder.patient;
         this.drugs = builder.drugs;
         this.dosage = builder.dosage;
@@ -128,6 +128,38 @@ public class Prescription {
 
     public float getTotalPrice() {
         return totalPrice;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public void setMeditation(String meditation) {
+        this.meditation = meditation;
+    }
+
+    public void setDrugs(List<String> drugs) {
+        this.drugs = drugs;
+    }
+
+    public void setDosage(String dosage) {
+        this.dosage = dosage;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setDrugAndQuantity(Map<String, Map<Integer, Float>> drugAndQuantity) {
+        this.drugAndQuantity = drugAndQuantity;
     }
 
     public Map<String, Map<Integer, Float>> getDrugAndQuantity() {

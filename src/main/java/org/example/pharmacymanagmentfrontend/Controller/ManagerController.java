@@ -12,83 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import org.example.pharmacymanagmentfrontend.Model.Person;
 import org.example.pharmacymanagmentfrontend.Model.UserGenerator;
 import org.example.pharmacymanagmentfrontend.Model.UserLogs;
-import org.example.pharmacymanagmentfrontend.View.InsuranceClaim;
-import org.example.pharmacymanagmentfrontend.View.ManagementDashboard;
-import org.example.pharmacymanagmentfrontend.View.PharmacyPersonnelDashboard;
-import org.example.pharmacymanagmentfrontend.View.PrescriptionView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.Date;
-
-import static org.example.pharmacymanagmentfrontend.View.SharedView.alterMessage;
-
 
 public class ManagerController {
-
-    @FXML
-    TextField usernamelogin;
-    @FXML
-    TextField passwordlogin;
-    @FXML
-    Label loginerrormessage;
-    @FXML
-    Button loginbutton;
-  //  private Stage stage1;
-  //  private Scene scene;
-    private Parent root;
 
     public static VBox updatePersonView() {
         VBox AddpersonPanel = new VBox(10);
         AddpersonPanel.getChildren().add(org.example.pharmacymanagmentfrontend.View.UpdatePerson.createUpdatePersonView());
         return AddpersonPanel;
-    }
-
-
-    public void loginAction(ActionEvent event) throws IOException {
-        String username = usernamelogin.getText();
-        String password = passwordlogin.getText();
-        Person user =UserGenerator.login(username,password);
-        if(user!=null){
-            Stage stage =  (Stage)loginbutton.getScene().getWindow();
-           switch (user.getType())
-           {
-
-               case PharmacyManager: {
-                   stage.close();
-                     ManagementDashboard.createManagementDashboard();
-                    break;
-               }
-               case Patient:
-                   Stage stage1= alterMessage("Patient Does not have the eligibility to login","Error","OK",null);
-                   stage1.show();
-                   break;
-               case Pharmacist:
-                   stage.close();
-                   PharmacyPersonnelDashboard.createPharmacyPersonnelDashboard();
-                   break;
-               case Cashier:
-                   stage.close();
-                   PharmacyPersonnelDashboard.createPharmacyPersonnelDashboard();
-                   stage.close();
-                   break;
-               case PharmacyTechnician:
-                   stage.close();
-                   PharmacyPersonnelDashboard.createPharmacyPersonnelDashboard();
-                   break;
-           }
-        }
-        else
-        {
-            loginerrormessage.setText("Invalid username or password");
-            passwordlogin.setText("");
-        }
-
     }
 
     public static VBox UserLogsScreen() {
@@ -124,19 +56,7 @@ public class ManagerController {
     @FXML
     private TextField searchField;
     @FXML
-    private Button searchButton;
-    @FXML
-    private Button resetButton;
-    @FXML
     private TableView<UserLogs> logsTable;
-    @FXML
-    private TableColumn<UserLogs, Date> loginTimeColumn;
-    @FXML
-    private TableColumn<UserLogs, Boolean> successfulLoginColumn;
-    @FXML
-    private TableColumn<UserLogs, String> usernameColumn;
-    @FXML
-    private TableColumn<UserLogs, String> userTypeColumn;
     @FXML
     private Label totalLogsLabel;
     @FXML
@@ -144,11 +64,7 @@ public class ManagerController {
 
     public void displayUserLogs()
     {
-        for(UserLogs userLogs: UserGenerator.getLoginTracker())
-        {
-            userLogsData.add(userLogs);
-
-        }
+        userLogsData.addAll(UserGenerator.getLoginTracker());
         logsTable.setItems(userLogsData);
         updateTotalLogs();
     }

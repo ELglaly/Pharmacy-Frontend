@@ -176,5 +176,13 @@ public class UpdatePatientView {
         }
         return birthDatePicker.getValue() != null ;
     }
+
+    public static TextField getUsernameField() {
+        return usernameField;
+    }
+
+    public static void setUsernameField(TextField usernameField) {
+        UpdatePatientView.usernameField = usernameField;
+    }
 }
 

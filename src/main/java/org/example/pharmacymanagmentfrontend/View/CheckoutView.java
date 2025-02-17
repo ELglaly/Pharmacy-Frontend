@@ -265,7 +265,7 @@ public class CheckoutView {
             Stage alert = alterMessage("Please add Card Details.", "Payment Method", "OK", null);
             alert.show();
         } else if ("insurance".equalsIgnoreCase(paymentMethods.getValue())) {
-            PharmacyPersonnelController.showInsurancClaim(prescription);
+            PharmacyPersonnelController.showInsuranceClaim(prescription);
         } else {
             Stage alert = alterMessage("Checkout completed successfully!\nThank you for your purchase.", "Success", "OK", null);
             alert.show();

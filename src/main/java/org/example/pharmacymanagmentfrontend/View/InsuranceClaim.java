@@ -1,3 +1,5 @@
+
+// InsuranceClaim.java
 package org.example.pharmacymanagmentfrontend.View;
 
 import javafx.geometry.Insets;
@@ -41,61 +43,16 @@ public class InsuranceClaim extends Stage {
         stage.setTitle("Insurance Claim Submission"); // Set the window title
 
         // Root layout using GridPane for organizing form components
-        GridPane root = new GridPane();
-        root.setPadding(new Insets(20)); // Add padding around the GridPane
-        root.setHgap(15); // Set horizontal gap between columns
-        root.setVgap(20); // Set vertical gap between rows
-
-        // Set background color for the form
-        root.setStyle("-fx-background-color: #f8f8f8;");
+        GridPane root = createRootLayout();
 
         // Call method to add preset details to the fields based on the prescription
-        addDetailsToFileds(prescription);
+        addDetailsToFields(prescription);
 
-        // Section: Patient Information
-        root.add(patientInfoLabel, 0, 0, 2, 1);
-
-        // Adding name and date of birth fields to the layout
-        root.add(nameLabel, 0, 1);
-        root.add(nameField, 1, 1);
-
-        root.add(dobLabel, 0, 2);
-        root.add(dobPicker, 1, 2);
-
-        root.add(insuranceNumberLabel, 0, 3);
-        root.add(insuranceNumberField, 1, 3);
-
-        // Section: Prescription Details
-        root.add(prescriptionDetailsLabel, 0, 5, 2, 1);
-
-        root.add(prescriptionDateLabel, 0, 7);
-        root.add(prescriptionDatePicker, 1, 7);
-
-        // Section: Claim Details
-        root.add(claimDetailsLabel, 0, 9, 2, 1);
-
-        root.add(claimIdLabel, 0, 10);
-        root.add(claimIdField, 1, 10);
-
-        root.add(claimDateLabel, 0, 11);
-        root.add(claimDatePicker, 1, 11);
-
-        root.add(claimAmountLabel, 0, 12);
-        root.add(claimAmountField, 1, 12);
-
-        root.add(claimDescriptionLabel, 0, 13);
-        root.add(claimDescriptionArea, 1, 13);
-
-        // Section: Action Buttons (Submit and Clear)
-        submitButton = ManagementDashboard.createStyledButton("Submit", "#2ecc71", "#27ae60");
-        clearButton = ManagementDashboard.createStyledButton("Clear", "#2ecc71", "#27ae60");
-
-        HBox buttonBox = new HBox(15, submitButton, clearButton);
-        buttonBox.setAlignment(Pos.CENTER_RIGHT); // Align buttons to the right
-        root.add(buttonBox, 0, 14, 2, 1); // Add buttons to the layout
-
-        // Set button actions
-        addActionToButtons();
+        // Add sections to the root layout
+        addPatientInfoSection(root);
+        addPrescriptionDetailsSection(root);
+        addClaimDetailsSection(root);
+        addActionButtons(root);
 
         // Wrap the root layout inside a ScrollPane for better usability on small screens
         ScrollPane scrollPane = new ScrollPane();
@@ -110,33 +67,95 @@ public class InsuranceClaim extends Stage {
         return scrollPane;
     }
 
+    // Create the root layout
+    private static GridPane createRootLayout() {
+        GridPane root = new GridPane();
+        root.setPadding(new Insets(20)); // Add padding around the GridPane
+        root.setHgap(15); // Set horizontal gap between columns
+        root.setVgap(20); // Set vertical gap between rows
+        root.setStyle("-fx-background-color: #f8f8f8;");
+        return root;
+    }
+
+    // Add patient information section to the root layout
+    private static void addPatientInfoSection(GridPane root) {
+        root.add(patientInfoLabel, 0, 0, 2, 1);
+        root.add(nameLabel, 0, 1);
+        root.add(nameField, 1, 1);
+        root.add(dobLabel, 0, 2);
+        root.add(dobPicker, 1, 2);
+        root.add(insuranceNumberLabel, 0, 3);
+        root.add(insuranceNumberField, 1, 3);
+    }
+
+    // Add prescription details section to the root layout
+    private static void addPrescriptionDetailsSection(GridPane root) {
+        root.add(prescriptionDetailsLabel, 0, 5, 2, 1);
+        root.add(prescriptionDateLabel, 0, 7);
+        root.add(prescriptionDatePicker, 1, 7);
+    }
+
+    // Add claim details section to the root layout
+    private static void addClaimDetailsSection(GridPane root) {
+        root.add(claimDetailsLabel, 0, 9, 2, 1);
+        root.add(claimIdLabel, 0, 10);
+        root.add(claimIdField, 1, 10);
+        root.add(claimDateLabel, 0, 11);
+        root.add(claimDatePicker, 1, 11);
+        root.add(claimAmountLabel, 0, 12);
+        root.add(claimAmountField, 1, 12);
+        root.add(claimDescriptionLabel, 0, 13);
+        root.add(claimDescriptionArea, 1, 13);
+    }
+
+    // Add action buttons to the root layout
+    private static void addActionButtons(GridPane root) {
+        submitButton = ManagementDashboard.createStyledButton("Submit", "#2ecc71", "#27ae60");
+        clearButton = ManagementDashboard.createStyledButton("Clear", "#2ecc71", "#27ae60");
+
+        HBox buttonBox = new HBox(15, submitButton, clearButton);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT); // Align buttons to the right
+        root.add(buttonBox, 0, 14, 2, 1); // Add buttons to the layout
+
+        // Set button actions
+        addActionToButtons();
+    }
+
     // Add actions to the Submit and Clear buttons
     private static void addActionToButtons() {
         // Action for Submit button
-        submitButton.setOnAction(event -> {
-            // Validate that all required fields are filled
-            if (nameField.getText().isEmpty() || dobPicker.getValue() == null ||
-                    insuranceNumberField.getText().isEmpty() || prescriptionDatePicker.getValue() == null
-                    || claimAmountField.getText().isEmpty() || nameField.getText()==null) {
-                showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields are required!");
-            } else {
-                // Auto-generate a claim ID
-                claimIdField.setText("CLM-" + Math.random() * 10000);
-                showAlert(Alert.AlertType.INFORMATION, "Submission Successful", "Claim submitted successfully!");
-            }
-        });
+        submitButton.setOnAction(event -> handleSubmitAction());
 
         // Action for Clear button
-        clearButton.setOnAction(event -> {
-            // Clear all fields to reset the form
-            nameField.clear();
-            dobPicker.setValue(null);
-            insuranceNumberField.clear();
-            prescriptionDatePicker.setValue(null);
-            claimAmountField.clear();
-            claimDescriptionArea.clear();
-            claimIdField.setText("Auto-generated");
-        });
+        clearButton.setOnAction(event -> handleClearAction());
+    }
+
+    // Handle the submit button action
+    private static void handleSubmitAction() {
+        if (validateFields()) {
+            claimIdField.setText("CLM-" + Math.random() * 10000);
+            showAlert(Alert.AlertType.INFORMATION, "Submission Successful", "Claim submitted successfully!");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields are required!");
+        }
+    }
+
+    // Handle the clear button action
+    private static void handleClearAction() {
+        nameField.clear();
+        dobPicker.setValue(null);
+        insuranceNumberField.clear();
+        prescriptionDatePicker.setValue(null);
+        claimAmountField.clear();
+        claimDescriptionArea.clear();
+        claimIdField.setText("Auto-generated");
+    }
+
+    // Validate the input fields
+    private static boolean validateFields() {
+        return !nameField.getText().isEmpty() && dobPicker.getValue() != null &&
+                !insuranceNumberField.getText().isEmpty() && prescriptionDatePicker.getValue() != null &&
+                !claimAmountField.getText().isEmpty();
     }
 
     // Method to show an alert (validation or success messages)
@@ -149,8 +168,7 @@ public class InsuranceClaim extends Stage {
     }
 
     // Method to populate form fields with prescription data (if available)
-    private static void addDetailsToFileds(Prescription prescription) {
-        // Set label and field for patient information
+    private static void addDetailsToFields(Prescription prescription) {
         patientInfoLabel = new Label("Patient Information:");
         patientInfoLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
@@ -166,14 +184,12 @@ public class InsuranceClaim extends Stage {
         insuranceNumberField = new TextField();
         insuranceNumberField.setPromptText("Enter insurance number");
 
-        // Set section and label for prescription details
         prescriptionDetailsLabel = new Label("Prescription Details:");
         prescriptionDetailsLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
         prescriptionDateLabel = new Label("Date of Prescription:");
         prescriptionDatePicker = new DatePicker(LocalDate.now()); // Default to today's date
 
-        // Section for claim details
         claimDetailsLabel = new Label("Claim Details:");
         claimDetailsLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
@@ -194,13 +210,11 @@ public class InsuranceClaim extends Stage {
         claimDescriptionArea.setPrefHeight(100); // Set height of description area
     }
 
-    // Method to check and set the patient's birth date in the date picker
+    // Method to check and set the patient's birthdate in the date picker
     private static void checkDateValue(Prescription prescription) {
-        // If no birth date in prescription, default to current date
-        if(prescription.getPatient().getBirthDate() == null) {
+        if (prescription.getPatient().getBirthDate() == null) {
             dobPicker.setValue(LocalDate.now());
         } else {
-            // Otherwise, convert birth date from Instant to LocalDate
             dobPicker.setValue(prescription.getPatient().getBirthDate().toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());

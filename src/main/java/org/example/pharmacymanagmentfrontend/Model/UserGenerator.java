@@ -1,10 +1,8 @@
 package org.example.pharmacymanagmentfrontend.Model;
 
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.pharmacymanagmentfrontend.HelloApplication;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -109,8 +107,8 @@ public class UserGenerator {
     public static Person login(String username, String password) {
         Person person = checkUsername(username);
         if (person != null) {
-            if (person.getPassword().equals(password) && HelloApplication.louckout < 5) {
-                HelloApplication.louckout = 0;
+            if (person.getPassword().equals(password) && HelloApplication.lockOut < 5) {
+                HelloApplication.lockOut = 0;
                 incrementAttemptedLogins(new Date(), person);
                 return person;
             } else {
@@ -122,12 +120,12 @@ public class UserGenerator {
     }
 
     private static void handleFailedLogin() {
-        if (HelloApplication.louckout >= 5) {
+        if (HelloApplication.lockOut >= 5) {
             Stage stage = alterMessage("More than 5 failed login attempts. Your account is now locked.", "Account Locked", "Ok", null);
             stage.show();
-            HelloApplication.louckout = 0;
+            HelloApplication.lockOut = 0;
         }
-        HelloApplication.louckout++;
+        HelloApplication.lockOut++;
     }
 
     public static Person checkUsername(String username) {
